@@ -9,6 +9,9 @@ const AddCustomer = () => {
         phonenumber: ""
     })
     const [errors, setErrors] = useState({});
+    const [theArray, setTheArray] = useState([]);
+    const [idIncrement, setIdIncrement] = useState(1);
+
 
     const validate = (fieldValues = input) => {
         let temp = { ...errors }
@@ -17,20 +20,20 @@ const AddCustomer = () => {
             temp.name = fieldValues.name ? "" : "This field is required."
 
         if ('email' in fieldValues)
-            if(!fieldValues.email){
-                temp.email =  "This field is required."
-            }else if(!(/$^|.+@.+..+/).test(fieldValues.email)){
-                temp.email =  "This email is not valuable."
-            }else{
-                temp.email=""   
+            if (!fieldValues.email) {
+                temp.email = "This field is required."
+            } else if (!(/$^|.+@.+..+/).test(fieldValues.email)) {
+                temp.email = "This email is not valuable."
+            } else {
+                temp.email = ""
             }
         if ('address' in fieldValues)
             temp.address = fieldValues.address ? "" : "This field is required."
-        
+
         if ('phonenumber' in fieldValues)
-            temp.phonenumber = fieldValues.phonenumber.length>9 ? "" : "The length should be 10"
-        
-    
+            temp.phonenumber = fieldValues.phonenumber.length > 9 ? "" : "The length should be 10"
+
+
         setErrors({
             ...temp
         })
@@ -51,23 +54,80 @@ const AddCustomer = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
+        
+        if (validate()) {
 
-        if(validate()){
+            var values = {
+                id: idIncrement,
+                name: input.name,
+                email: input.email,
+                address:input.address,
+                phonenumber:input.phonenumber
+            }
+
+            setTheArray([...theArray, values]);
+            setIdIncrement(idIncrement + 1);
+
+            input.name="";
+            input.email="";
+            input.address="";
+            input.phonenumber="";
+
 
         }
 
     }
+
+    const handleDeleteData = (id) => {
+        debugger
+        let array1=theArray;
+        let index=  array1.findIndex(item => item.id == id);
+       if (index > -1){
+           array1.splice(index, 1)
+           setTheArray([...array1]);
+       }
+
+   }
 
 
 
 
     return (
         <div
-
             style={{ marginLeft: '20px', width: '70%' }}
-
         >
-            <h1>Thaya\an1234</h1>
+
+            <table table class="table">
+                <thead>
+                    <tr>
+                        <td>id</td>
+                        <td>name</td>
+                        <th>email</th>
+                        <th>address</th>
+                        <th>phonenumber</th>
+                        <th>Delete/Edit</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {theArray.map(item => {
+                        return (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.email}</td>
+                                <td>{item.address}</td>
+                                <td>{item.phonenumber}</td>
+                                <td>  <button  class="btn btn-danger" onClick={() => handleDeleteData(item.id)}>Delete</button>    </td>
+                                {/* */}
+                            </tr>
+                        );
+                    })
+                    }
+                </tbody>
+            </table>
+
             <form onSubmit={handleSubmit} autoComplete="off">
                 <div class="form-group" style={{ margin: '30px' }}>
                     <label for="inputName">Enter Name</label>
@@ -107,9 +167,9 @@ const AddCustomer = () => {
                 </div>
                 <div class="form-group" style={{ margin: '30px' }}>
                     <label for="inputAddress">Enter Phonenumber</label>
-                    <input 
-                      type="number"
-                      name="phonenumber"
+                    <input
+                        type="number"
+                        name="phonenumber"
                         id="phonenumber"
                         value={input.phonenumber}
                         onChange={handleInputChange}
@@ -119,7 +179,7 @@ const AddCustomer = () => {
 
                     {errors.phonenumber && <div class="alert alert-danger">{errors.phonenumber}</div>}
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" style={{ margin: '30px' }}>Submit</button>
 
             </form>
         </div>
