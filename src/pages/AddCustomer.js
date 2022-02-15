@@ -67,6 +67,7 @@ const AddCustomer = () => {
             style={{ marginLeft: '20px', width: '70%' }}
 
         >
+            <h1>Thayaan</h1>
             <form onSubmit={handleSubmit} autoComplete="off">
                 <div class="form-group" style={{ margin: '30px' }}>
                     <label for="inputName">Enter Name</label>
