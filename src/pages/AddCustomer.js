@@ -1,19 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Input from '../controls/Input'
 
-const AddCustomer = () => {
+const AddCustomer = (props) => {
+
+    const { handleClose1, handleClose2, idIncrement, customerData } = props;
+
 
     const [input, setInput] = useState({
+        id: 0,
         name: "",
         email: "",
         address: "",
         phonenumber: ""
     })
+
+  
+    // let cars = [];
+    // useEffect(() => {
+    //  cars.push() [
+    //         {
+    //             "color": "purple",
+    //             "type": "minivan",
+    //             "registration": new Date('2017-01-03'),
+    //             "capacity": 7
+    //         },
+    //         {
+    //             "color": "red",
+    //             "type": "station wagon",
+    //             "registration": new Date('2018-03-03'),
+    //             "capacity": 5
+    //         },
+    //     ];
+    // }, []);
+
+    useEffect(() => {
+        if (customerData != null) {
+            console.log(customerData)
+            setInput(customerData)
+        }
+    }, []);
+
     const [errors, setErrors] = useState({});
-    const [theArray, setTheArray] = useState([]);
-    const [idIncrement, setIdIncrement] = useState(1);
 
-
-    const validate = (fieldValues = input) => {
+  const validate = (fieldValues = input) => {
         let temp = { ...errors }
 
         if ('name' in fieldValues)
@@ -42,143 +71,93 @@ const AddCustomer = () => {
 
 
     }
-
-
-
-
     const handleInputChange = (e) => {
+
         let { name, value } = e.target;
         setInput({ ...input, [name]: value })
         validate({ [name]: value })
 
     }
+
+    
     const handleSubmit = (e) => {
         e.preventDefault()
-        
+
         if (validate()) {
 
-            var values = {
-                id: idIncrement,
-                name: input.name,
-                email: input.email,
-                address:input.address,
-                phonenumber:input.phonenumber
+            if (customerData == null) {
+                var values = {
+                    id: idIncrement,
+                    name: input.name,
+                    email: input.email,
+                    address: input.address,
+                    phonenumber: input.phonenumber
+                }
+                handleClose1(values);
+            } else {
+                var values = {
+                    id: customerData.id,
+                    name: input.name,
+                    email: input.email,
+                    address: input.address,
+                    phonenumber: input.phonenumber
+                }
+                handleClose2(values);
             }
 
-            setTheArray([...theArray, values]);
-            setIdIncrement(idIncrement + 1);
 
-            input.name="";
-            input.email="";
-            input.address="";
-            input.phonenumber="";
+            input.name = "";
+            input.email = "";
+            input.address = "";
+            input.phonenumber = "";
 
 
         }
 
     }
 
-    const handleDeleteData = (id) => {
-        debugger
-        let array1=theArray;
-        let index=  array1.findIndex(item => item.id == id);
-       if (index > -1){
-           array1.splice(index, 1)
-           setTheArray([...array1]);
-       }
-
-   }
-
-
-
-
     return (
         <div
-            style={{ marginLeft: '20px', width: '70%' }}
+
         >
 
-            <table table class="table">
-                <thead>
-                    <tr>
-                        <td>id</td>
-                        <td>name</td>
-                        <th>email</th>
-                        <th>address</th>
-                        <th>phonenumber</th>
-                        <th>Delete/Edit</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {theArray.map(item => {
-                        return (
-                            <tr key={item.id}>
-                                <td>{item.id}</td>
-                                <td>{item.name}</td>
-                                <td>{item.email}</td>
-                                <td>{item.address}</td>
-                                <td>{item.phonenumber}</td>
-                                <td>  <button  class="btn btn-danger" onClick={() => handleDeleteData(item.id)}>Delete</button>    </td>
-                                {/* */}
-                            </tr>
-                        );
-                    })
-                    }
-                </tbody>
-            </table>
-
             <form onSubmit={handleSubmit} autoComplete="off">
-                <div class="form-group" style={{ margin: '30px' }}>
-                    <label for="inputName">Enter Name</label>
-                    <input name="name"
-                        id="name"
-                        value={input.name}
-                        onChange={handleInputChange}
-                        placeholder="Enter Name......"
-                        class="form-control"
-                    />
 
-                    {errors.name && <div class="alert alert-danger">{errors.name}</div>}
-                </div>
-                <div class="form-group" style={{ margin: '30px' }}>
-                    <label for="inputEmail">Enter Email</label>
-                    <input name="email"
-                        id="email"
-                        value={input.email}
-                        onChange={handleInputChange}
-                        placeholder="Enter Email......"
-                        class="form-control"
-                    />
+                <Input
+                    id="name"
+                    value={input.name}
+                    handleInputChange={handleInputChange}
+                    placeholder="Enter Name......"
+                    errors={errors.name}
+                />
 
-                    {errors.email && <div class="alert alert-danger">{errors.email}</div>}
-                </div>
-                <div class="form-group" style={{ margin: '30px' }}>
-                    <label for="inputAddress">Enter Address</label>
-                    <input name="address"
-                        id="address"
-                        value={input.address}
-                        onChange={handleInputChange}
-                        placeholder="Enter Address......"
-                        class="form-control"
-                    />
+                <Input
+                    id="email"
+                    value={input.email}
+                    handleInputChange={handleInputChange}
+                    placeholder="Enter Email......"
+                    errors={errors.email}
+                />
 
-                    {errors.address && <div class="alert alert-danger">{errors.address}</div>}
-                </div>
-                <div class="form-group" style={{ margin: '30px' }}>
-                    <label for="inputAddress">Enter Phonenumber</label>
-                    <input
-                        type="number"
-                        name="phonenumber"
-                        id="phonenumber"
-                        value={input.phonenumber}
-                        onChange={handleInputChange}
-                        placeholder="Enter Phonenumber......"
-                        class="form-control"
-                    />
 
-                    {errors.phonenumber && <div class="alert alert-danger">{errors.phonenumber}</div>}
-                </div>
+                <Input
+                    id="address"
+                    value={input.address}
+                    handleInputChange={handleInputChange}
+                    placeholder="Enter Address......"
+                    errors={errors.address}
+                />
+
+                <Input
+                    id="phonenumber"
+                    value={input.phonenumber}
+                    handleInputChange={handleInputChange}
+                    placeholder="Enter Phonenumber......"
+                    errors={errors.phonenumber}
+                />
+
+              
+
                 <button type="submit" class="btn btn-primary" style={{ margin: '30px' }}>Submit</button>
 
             </form>

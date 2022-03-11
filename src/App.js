@@ -4,7 +4,9 @@ import "bootstrap/dist/css/bootstrap.css"
 
 
 import Man from './man'
-import AddCustomer from './pages/AddCustomer'
+import CustomerList from './pages/CustomerList'
+import Register from './pages/Register'
+
 
 
 function App() {
@@ -14,7 +16,8 @@ function App() {
         <Routes>
         
           <Route path="/man" element={<Man />} />
-          <Route path="/addCustomer" element={<AddCustomer />} />
+          <Route path="/customerList" element={<CustomerList />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>
