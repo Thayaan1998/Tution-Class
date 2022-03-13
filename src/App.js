@@ -7,6 +7,7 @@ import Man from './man'
 import CustomerList from './pages/CustomerList'
 import Register from './pages/Register'
 import PostRequirement from './pages/PostRequirement'
+import AskQuestion from './pages/AskQuestion'
 
 
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/register" element={<Register />} />
           <Route path="/postRequirement" element={<PostRequirement />} />
+          <Route path="/askQuestion" element={<AskQuestion />} />
         </Routes>
       </BrowserRouter>
     </div>

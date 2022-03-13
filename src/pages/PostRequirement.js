@@ -73,7 +73,7 @@ const PostRequirement = () => {
                 serviceConsumerId :1
             }
 
-            console.log(values)
+      
 
             try{
                 const headers = {
