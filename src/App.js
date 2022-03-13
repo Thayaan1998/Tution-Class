@@ -6,6 +6,8 @@ import "bootstrap/dist/css/bootstrap.css"
 import Man from './man'
 import CustomerList from './pages/CustomerList'
 import Register from './pages/Register'
+import PostRequirement from './pages/PostRequirement'
+
 
 
 
@@ -18,6 +20,8 @@ function App() {
           <Route path="/man" element={<Man />} />
           <Route path="/customerList" element={<CustomerList />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/postRequirement" element={<PostRequirement />} />
         </Routes>
       </BrowserRouter>
     </div>
