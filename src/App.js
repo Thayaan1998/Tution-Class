@@ -8,6 +8,8 @@ import CustomerList from './pages/CustomerList'
 import Register from './pages/Register'
 import PostRequirement from './pages/PostRequirement'
 import AskQuestion from './pages/AskQuestion'
+import AddSubscribe from './pages/AddSubscribe'
+
 
 
 
@@ -24,6 +26,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/postRequirement" element={<PostRequirement />} />
           <Route path="/askQuestion" element={<AskQuestion />} />
+          <Route path="/addSubscribe" element={<AddSubscribe />} />
         </Routes>
       </BrowserRouter>
     </div>
