@@ -10,6 +10,7 @@ import PostRequirement from './pages/PostRequirement'
 import AskQuestion from './pages/AskQuestion'
 import AddSubscribe from './pages/AddSubscribe'
 
+import SendPromo from './pages/SendPromo'
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/postRequirement" element={<PostRequirement />} />
           <Route path="/askQuestion" element={<AskQuestion />} />
           <Route path="/addSubscribe" element={<AddSubscribe />} />
+          <Route path="/sendPromo" element={<SendPromo />} />
         </Routes>
       </BrowserRouter>
     </div>
