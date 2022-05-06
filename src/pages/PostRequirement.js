@@ -3,6 +3,7 @@ import axios from "axios";
 import Input from '../controls/Input'
 import TextArea from '../controls/TextArea'
 
+
 const PostRequirement = () => {
 
     const [input, setInput] = useState({
@@ -12,6 +13,8 @@ const PostRequirement = () => {
         phonenumber: "",
         category: ""
     })
+
+  
 
     const [errors, setErrors] = useState({});
 
@@ -81,6 +84,33 @@ const PostRequirement = () => {
                 };
     
                 var a= await axios.post("http://localhost:9000/postrequirement/addPostRequirement", values, { headers });
+    
+                console.log(a);
+
+                alert(a.data);
+            }catch(ex){
+                 console.log(ex)
+            }
+             debugger
+            try{
+                
+                const headers1 = {
+                    'Content-Type': 'application/json',
+                    'Authorization':'key=AAAAhnaShsw:APA91bHVgM38GFYy6zVrICghMhrpZLpln3TCp7gU0ctAqKU6cIWM5oFKJGz1JyqtKHmM2pxfVptVZ0abU0qckm5hKPqjn6EaSacpBu8YYoliRJM1Jb_E0M-9hZH603q2UamC_hdSHCdf'
+                };
+
+                var values1={
+                    'to': 'cpObYHnYGNebcR3htbqkI7:APA91bF6LaMPVhiIlkDqS4DZ5J9PbK3Iav2FyArt9KtszuCnc6ywjzjWfYzQ2xUPiAlossBlt84UFDMgsHvoPI6yHjYyssv9zXSyvJcWo6lxpO6erjtUt9M2mxOIJbdmI1QpbstMBcqJ',
+                    'notification': {
+                 
+                     'body': 'ahahahha  sssssssssssssssssssss',
+                     'title': 'aaaaaaaaaaaaaaaaaaaaa'
+                    }
+                }
+
+
+    
+                 await axios.post("https://fcm.googleapis.com/fcm/send", values1, { headers1 });
     
                 console.log(a);
 
