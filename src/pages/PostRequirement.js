@@ -14,7 +14,7 @@ const PostRequirement = () => {
         category: ""
     })
 
-  
+
 
     const [errors, setErrors] = useState({});
 
@@ -60,65 +60,76 @@ const PostRequirement = () => {
     }
 
 
-    
-    const handleSubmit = async(e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
+    
 
         if (validate()) {
 
             var values = {
                 requirementId: 0,
-                location:input.location,
+                location: input.location,
                 requirementDetails: input.requirementDetails,
-                email:input.email,
+                email: input.email,
                 phonenumber: input.phonenumber,
-                category:input.category,
-                serviceConsumerId :1
+                category: input.category,
+                serviceConsumerId: 1
             }
 
-      
 
-            try{
+
+            
+
+            try {
                 const headers = {
                     'Content-Type': 'application/json'
                 };
-    
-                var a= await axios.post("http://localhost:9000/postrequirement/addPostRequirement", values, { headers });
-    
-                console.log(a);
 
-                alert(a.data);
-            }catch(ex){
-                 console.log(ex)
-            }
-             debugger
-            try{
-                
-                const headers1 = {
-                    'Content-Type': 'application/json',
-                    'Authorization':'key=AAAAhnaShsw:APA91bHVgM38GFYy6zVrICghMhrpZLpln3TCp7gU0ctAqKU6cIWM5oFKJGz1JyqtKHmM2pxfVptVZ0abU0qckm5hKPqjn6EaSacpBu8YYoliRJM1Jb_E0M-9hZH603q2UamC_hdSHCdf'
-                };
+                var a1 = await axios.post("http://localhost:9000/postrequirement/addPostRequirement", values, { headers });
 
-                var values1={
-                    'to': 'cpObYHnYGNebcR3htbqkI7:APA91bF6LaMPVhiIlkDqS4DZ5J9PbK3Iav2FyArt9KtszuCnc6ywjzjWfYzQ2xUPiAlossBlt84UFDMgsHvoPI6yHjYyssv9zXSyvJcWo6lxpO6erjtUt9M2mxOIJbdmI1QpbstMBcqJ',
-                    'notification': {
-                 
-                     'body': 'ahahahha  sssssssssssssssssssss',
-                     'title': 'aaaaaaaaaaaaaaaaaaaaa'
+                console.log(a1);
+
+                try{
+                    var values1={
+                        'to': 'cpObYHnYGNebcR3htbqkI7:APA91bF6LaMPVhiIlkDqS4DZ5J9PbK3Iav2FyArt9KtszuCnc6ywjzjWfYzQ2xUPiAlossBlt84UFDMgsHvoPI6yHjYyssv9zXSyvJcWo6lxpO6erjtUt9M2mxOIJbdmI1QpbstMBcqJ',
+                        'notification': {
+        
+                         'body': 'ahahahha  sssssssssssssssssssss',
+                         'title': 'aaaaaaaaaaaaaaaaaaaaa'
+                        }
                     }
+                      axios
+                        .post(
+                          "https://fcm.googleapis.com/fcm/send",
+        
+                            values1
+                          ,
+                          {
+                            headers: {
+                              "Content-Type": "application/json",
+                              Authorization:
+                                "key=AAAAhnaShsw:APA91bHVgM38GFYy6zVrICghMhrpZLpln3TCp7gU0ctAqKU6cIWM5oFKJGz1JyqtKHmM2pxfVptVZ0abU0qckm5hKPqjn6EaSacpBu8YYoliRJM1Jb_E0M-9hZH603q2UamC_hdSHCdf"
+                            }
+                          }
+                        )
+                        .then(response => {
+                          console.log("response" + response);
+                        })
+                        .catch(error => {
+                          console.log(error);
+                        });
+                }catch(ex){
+                     console.log(ex)
                 }
 
-
-    
-                 await axios.post("https://fcm.googleapis.com/fcm/send", values1, { headers1 });
-    
-                console.log(a);
-
-                alert(a.data);
-            }catch(ex){
-                 console.log(ex)
+              //  alert(a.data);
+            } catch (ex) {
+                console.log(ex)
             }
-         }
+
+        }
 
     }
 
@@ -128,23 +139,23 @@ const PostRequirement = () => {
         >
 
             <form onSubmit={handleSubmit} autoComplete="off">
-    
 
-            <Input
+
+                <Input
                     id="category"
                     value={input.category}
                     handleInputChange={handleInputChange}
                     placeholder="Enter category......"
                     errors={errors.category}
                 />
-               <Input
+                <Input
                     id="location"
                     value={input.location}
                     handleInputChange={handleInputChange}
                     placeholder="Enter location......"
                     errors={errors.location}
                 />
-              
+
 
                 <Input
                     id="email"
@@ -153,7 +164,7 @@ const PostRequirement = () => {
                     placeholder="Enter Email......"
                     errors={errors.email}
                 />
-                 <Input
+                <Input
                     id="phonenumber"
                     value={input.phonenumber}
                     handleInputChange={handleInputChange}
@@ -168,8 +179,9 @@ const PostRequirement = () => {
                     placeholder="Enter requirementDetails......"
                     errors={errors.requirementDetails}
                 />
-            
-                <button type="submit" class="btn btn-primary" style={{ margin: '30px' }}>Submit</button>
+
+                <button type="submit" class="btn btn-primary" style={{ margin: '30px' }} >Submit</button>
+                
 
             </form>
 
