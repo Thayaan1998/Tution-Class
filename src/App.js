@@ -14,6 +14,8 @@ import AddSubscribe from './pages/AddSubscribe'
 import GetPostRequirements from './pages/GetPostRequirements'
 
 import SendPromo from './pages/SendPromo'
+import Login from './pages/Login'
+
 
 
 
@@ -33,6 +35,7 @@ function App() {
           <Route path="/addSubscribe" element={<AddSubscribe />} />
           <Route path="/sendPromo" element={<SendPromo />} />
           <Route path="/reviews" element={<Reviews />} />
+          <Route path="/login" element={<Login />} />
 
           <Route path="/getPostRequirements" element={<GetPostRequirements />} />
         </Routes>
