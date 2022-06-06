@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from '../controls/Input'
+import Grid from '@mui/material/Grid';
+import { Card } from 'react-bootstrap';
+import Button from '@mui/material/Button';
+
+
 
 const SendPromo = () => {
     const [serviceProviders, setServiceProviders] = React.useState([]);
@@ -60,23 +65,60 @@ const SendPromo = () => {
     return (
         <div
         >
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                <Grid item xs={4} >
+                    {/* <Card style={{ width: '18rem', margin: '20px' }}>
+                        <Card.Body>
+                            <Card.Text>
+                                <b>{row.name}</b>
+                            </Card.Text>
 
-            <form onSubmit={handleSubmit} autoComplete="off">
+                            <Card.Text>
+                                {row.review}
+                            </Card.Text>
+                        <Card.Body>
+                    </Card> */}
+                    <Card style={{ width: '30rem', margin: '20px' }}>
+                        <Card.Body>
+                            <Card.Text>
+                                {/* <img src={require('')} /> */}
 
+                                <b>Name:</b> Thayaan
+                            </Card.Text>
+                            <Card.Text>
+                                <b>Age:</b> 21
+                            </Card.Text>
+                            <Card.Text>
+                                <b>Location:</b> Kotehena
+                            </Card.Text>
+                            <Card.Text>
+                                <b> Experience:</b> 2 Years
+                            </Card.Text>
+                            <Card.Text>
+                                <b>Degree:</b> BE Eng
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Grid>
 
+                <Grid item xs={8}>
+                    <Card style={{ width: '60rem', margin: '20px' }}>
+                        <form onSubmit={handleSubmit} autoComplete="off">
 
-                <select value={serviceProvider} id="id1" onChange={handleChange} class="form-select" aria-label="Default select example" style={{ margin: '30px' }}>
-                    {serviceProviders.map(item => {
-                        return (<option key={item.serviceProviderId} value={item.serviceProviderId}>{item.servideProviderName}</option>);
-                    })}
-                </select>
+                            <Card.Text>
+                                <b>Degree:</b> BE Eng
+                            </Card.Text>
+                            <select value={serviceProvider} id="id1" onChange={handleChange} class="form-select" aria-label="Default select example" style={{ margin: '30px', width: '400px' }}>
+                                {serviceProviders.map(item => {
+                                    return (<option key={item.serviceProviderId} value={item.serviceProviderId}>{item.servideProviderName}</option>);
+                                })}
+                            </select>
+                            <Button variant="contained" color="primary" type="submit" style={{ margin: '30px' }}>Send Promo</Button>
+                        </form>
+                    </Card>
 
-
-
-                <button type="submit" class="btn btn-primary" style={{ margin: '30px' }}>Submit</button>
-
-            </form>
-
+                </Grid>
+            </Grid>
 
         </div>
     );
