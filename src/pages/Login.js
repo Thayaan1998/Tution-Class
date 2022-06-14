@@ -6,10 +6,16 @@ import AddOTPNumber from "./AddOTPNumber";
 import Popup from '../controls/Popup'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-
+import { useNavigate } from 'react-router-dom'
+import { encryptPassword, decryptPassword } from "./decryptAndEncrypt"
+import Navigation5 from "../navigations/Navigation5"
+import Button from '@mui/material/Button';
 
 const Login = () => {
     // const [userType, setUserType] = React.useState('');
+
+    const navigate = useNavigate();
+
 
     const [input, setInput] = useState({
         email: "",
@@ -19,6 +25,13 @@ const Login = () => {
     const [errors, setErrors] = useState({});
     const [show, setShow] = useState(false);
     const [otpNumber, setOtpNumber] = useState(1);
+
+    const [userType, setUserType] = useState("");
+    const [userId, setUserId] = useState("");
+
+    localStorage.setItem("userType", "");
+    localStorage.setItem("userId", "");
+
 
 
     const handleClose = () => setShow(false);
@@ -78,18 +91,77 @@ const Login = () => {
                 userTypeId: ""
             }
 
+            if (input.email == "admin@gmail.com" && input.password == "admin123") {
+
+                localStorage.setItem("userType", "admin");
+                localStorage.setItem("userId", "0");
+                navigate('/dashboard')
+                return
+            }
+
             try {
                 const headers = {
                     'Content-Type': 'application/json'
                 };
 
-                var a = await axios.post("http://localhost:9000/users/login", values, { headers });
+                var a = await axios.post("http://localhost:9000/users/login1", values, { headers });
 
-                console.log(a.data);
-                if (a.data != "Not valid username or password") {
-                    setOtpNumber(a.data)
-                    setShow(true)
-                }
+
+                if (a.data == '') {
+                    alert("not valid username")
+                } else
+                    if (decryptPassword(a.data.password) !== input.password) {
+                        alert("not valid password")
+                    } else {
+                        var c;
+                        if (a.data.userTypeId == 1) {
+                            c = await axios.get("http://localhost:9000/users/getServiceProviderByUser/" + a.data.userId, { headers });
+                            console.log(c.data)
+                            if (c.data.result === "not Accepted") {
+                                alert("Admin not yet accepted you")
+                                return
+                            }
+                            var b = await axios.post("http://localhost:9000/users/login2", values, { headers });
+
+                            console.log(b.data)
+                            setUserType("serviceProvider")
+                            setUserId(c.data.serviceProviderId)
+                            setShow(true)
+
+                        } else if (a.data.userTypeId == 2) {
+                            c = await axios.get("http://localhost:9000/users/gerServiceConsumer/" + a.data.userId, { headers });
+                            console.log(c.data)
+                            var b = await axios.post("http://localhost:9000/users/login2", values, { headers });
+
+                            setOtpNumber(b.data)
+                            setUserType("serviceConsumer")
+                            setUserId(c.data.serviceConsumerId)
+
+
+                            setShow(true)
+                        } else {
+                            c = await axios.get("http://localhost:9000/users/getAgentByUser/" + a.data.userId, { headers });
+                            if (c.data.result === "not Accepted") {
+                                alert("Admin not yet accepted you")
+                                return
+                            }
+                            var b = await axios.post("http://localhost:9000/users/login2", values, { headers });
+
+                            setOtpNumber(b.data)
+                            setUserType("agent")
+                            setUserId(c.data.agentId)
+
+
+                            setShow(true)
+
+                        }
+
+                    }
+
+                // if (a.data != null) {
+                // setOtpNumber(a.data)
+                // setShow(true)
+                // }
 
 
 
@@ -108,14 +180,18 @@ const Login = () => {
             <Popup
                 show={show}
                 handleClose={handleClose}
+
                 title="Add OtpNumber"
             >
                 <AddOTPNumber
 
                     otpNumber={otpNumber}
+                    userType={userType}
+                    userId={userId}
 
                 />
             </Popup>
+            <Navigation5></Navigation5>
 
 
 
@@ -146,7 +222,7 @@ const Login = () => {
                                 errors={errors.password}
                             />
 
-                            <button type="submit" class="btn btn-primary" style={{ margin: '30px', width: '84%' }}>Login</button>
+                            <Button type="submit" variant="contained" color="primary" style={{ margin: '30px', width: '84%' }}>Login</Button>
 
                         </form>
 

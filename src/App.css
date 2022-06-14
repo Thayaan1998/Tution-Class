@@ -37,4 +37,26 @@
   }
 } */
 
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 100px;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 20px;
+
+ 
+}
+
+.right {
+  right: 0;
+  margin: left 20px ;
+ 
+}
+
 

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const Navigation2 = () => {
+const Navigation4 = () => {
     const navigate = useNavigate()
     return (
         <div>
@@ -23,26 +23,20 @@ const Navigation2 = () => {
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                               
-                                onClick={() => navigate('/postRequirement')}
+                                onClick={() => navigate('/sendPromo')}
 
                             >
-                               Post PostRequirements
+                             Send Promo
                             </Button>
                          
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}
-                                onClick={() => navigate('/getServiceProviders')}
+                                onClick={() => navigate('/editAgentProfile')}
                             >
-                               Service Providers
+                              Edit Agent
                             </Button>
-                            <Button
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                                // className={classes.tabs}
-                                onClick={() => navigate('/getQuotation')}
-                            >
-                               quotation
-                            </Button>
+                           
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}
@@ -61,4 +55,4 @@ const Navigation2 = () => {
 
 };
 
-export default Navigation2;
+export default Navigation4;

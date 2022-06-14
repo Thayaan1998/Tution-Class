@@ -10,9 +10,11 @@ import Input from '../controls/Input'
 import SearchIcon from '@mui/icons-material/Search';
 import Popup from '../controls/Popup'
 import Navigation2 from "../navigations/Navigation2"
+import { useNavigate } from 'react-router-dom'
 
 const GetServiceProvider = () => {
 
+    const navigate = useNavigate();
     const [serviceProviders, SetServiceProviders] = useState([]);
     const [locations, setLocations] = useState([]);
     const [location, setLocation] = useState(0);
@@ -27,6 +29,11 @@ const GetServiceProvider = () => {
     const [email, setEmail] = useState("");
     const [contactNumber, setContactNumber] = useState("");
     const [address, setAddress] = useState("");
+
+    if (localStorage.getItem("userType") !== "serviceConsumer") {
+        navigate('/login')
+    }
+
 
 
 

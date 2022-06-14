@@ -8,6 +8,11 @@ import CardContent from '@mui/material/CardContent';
 import Popup from '../controls/Popup'
 
 import Button from '@mui/material/Button';
+import { WindowSharp } from "@mui/icons-material";
+
+import { useNavigate } from 'react-router-dom'
+import { encryptPassword, decryptPassword } from "./decryptAndEncrypt"
+import Navigation5 from "../navigations/Navigation5"
 
 
 const Register = () => {
@@ -35,6 +40,7 @@ const Register = () => {
 
 
 
+    const navigate = useNavigate();
 
 
     const [input, setInput] = useState({
@@ -134,7 +140,7 @@ const Register = () => {
                 setShow2(true);
             }
         }
-       
+
     }
 
     const [attachment, setAttachment] = useState();
@@ -180,8 +186,8 @@ const Register = () => {
                 "http://localhost:9000/users/saveImge",
                 formData1
             );
-            let attachmentFileName="http://localhost:9000/"+resImage.data
-    
+            let attachmentFileName = "http://localhost:9000/" + resImage.data
+
 
             const headers = {
                 'Content-Type': 'application/json'
@@ -194,9 +200,9 @@ const Register = () => {
                 address: input.address,
                 contactNumber: input.contactNumber,
                 postcode: input.postcode,
-                password: input.password,
+                password: encryptPassword(input.password),
                 userTypeId: userType,
-                image:attachmentFileName
+                image: attachmentFileName
             }
 
 
@@ -256,15 +262,9 @@ const Register = () => {
 
                     alert(c.data);
                 }
+                navigate("/login")
 
             }
-
-
-
-
-
-
-
         } catch (ex) {
             console.log(ex)
         }
@@ -281,6 +281,8 @@ const Register = () => {
     return (
         <div
         >
+            <Navigation5></Navigation5>
+
             <Popup
                 show={show1}
                 handleClose={handleClose1}

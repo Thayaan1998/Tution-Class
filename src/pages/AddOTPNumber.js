@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Input from '../controls/Input'
+import { useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button';
+
 
 const AddOTPNumber = (props) => {
+    const navigate = useNavigate();
 
-    const { otpNumber } = props;
+
+    const { otpNumber,userType,userId } = props;
 
     console.log(otpNumber)
+    // console.log(userType)
+    // console.log(userId)
+
+
 
 
     const [input, setInput] = useState({
@@ -46,6 +55,15 @@ const AddOTPNumber = (props) => {
         if (validate()) {
             if(input.otp==otpNumber){
                 console.log("login successful")
+                localStorage.setItem("userType",userType);
+                localStorage.setItem("userId",userId);
+                if(userType==="serviceProvider"){
+                    navigate("/getPostRequirements")
+                }else if(userType==="serviceConsumer"){
+                    navigate("/postRequirement")
+                }else{
+                    navigate("/sendPromo")
+                }
             }
         }
 
@@ -65,7 +83,7 @@ const AddOTPNumber = (props) => {
                     placeholder="Enter Otp......"
                     errors={errors.otp}
                 />
-                <button type="submit" class="btn btn-primary" style={{ margin: '30px' }}>Submit OTP</button>
+                <Button type="submit" variant="contained" color="primary" style={{ margin: '30px' }}>Submit OTP</Button>
 
             </form>
         </div>

@@ -7,10 +7,11 @@ import Button from '@mui/material/Button';
 import Popup from '../controls/Popup'
 
 import Navigation3 from "../navigations/Navigation3"
+import { useNavigate } from 'react-router-dom'
 
 
 const GetPostRequirements = () => {
-
+    const navigate = useNavigate();
     const [PostRequirement, SetPostRequirement] = useState([]);
 
     const [show1, setShow1] = useState(false);
@@ -19,7 +20,9 @@ const GetPostRequirements = () => {
 
     const [serviceConsumerId, setServiceConsumerId] = useState(0);
 
-
+    if (localStorage.getItem("userType") !== "serviceProvider") {
+        navigate('/login')
+    }
 
     const handleClose1 = () => setShow1(false);
 
@@ -67,7 +70,7 @@ const GetPostRequirements = () => {
                 serviceConsumerId: serviceConsumerId
             },
             serviceProvider: {
-                serviceProviderId: 19
+                serviceProviderId: localStorage.getItem("userId")
             }
 
         }

@@ -7,6 +7,8 @@ import { Card } from 'react-bootstrap';
 
 
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom'
+
 
 const PostRequirement = () => {
 
@@ -17,12 +19,17 @@ const PostRequirement = () => {
         phonenumber: "",
         category: ""
     })
+    const navigate = useNavigate();
 
 
 
     const [errors, setErrors] = useState({});
 
     const [locations, setLocations] = React.useState([]);
+
+    if (localStorage.getItem("userType") !== "serviceConsumer") {
+        navigate('/login')
+    }
 
 
 
@@ -100,7 +107,7 @@ const PostRequirement = () => {
                 phonenumber: input.phonenumber,
                 category: input.category,
                 serviceConsumer: {
-                    serviceConsumerId:10
+                    serviceConsumerId:localStorage.getItem("userId")
 
                 }
             }
@@ -120,40 +127,40 @@ const PostRequirement = () => {
 
                 console.log(a1);
 
-                // try {
-                //     var values1 = {
-                //         'to': 'cpObYHnYGNebcR3htbqkI7:APA91bF6LaMPVhiIlkDqS4DZ5J9PbK3Iav2FyArt9KtszuCnc6ywjzjWfYzQ2xUPiAlossBlt84UFDMgsHvoPI6yHjYyssv9zXSyvJcWo6lxpO6erjtUt9M2mxOIJbdmI1QpbstMBcqJ',
-                //         'notification': {
+                try {
+                    var values1 = {
+                        'to': 'cpObYHnYGNebcR3htbqkI7:APA91bF6LaMPVhiIlkDqS4DZ5J9PbK3Iav2FyArt9KtszuCnc6ywjzjWfYzQ2xUPiAlossBlt84UFDMgsHvoPI6yHjYyssv9zXSyvJcWo6lxpO6erjtUt9M2mxOIJbdmI1QpbstMBcqJ',
+                        'notification': {
 
-                //             'body': 'ahahahha  sssssssssssssssssssss',
-                //             'title': 'aaaaaaaaaaaaaaaaaaaaa'
-                //         }
-                //     }
-                //     axios
-                //         .post(
-                //             "https://fcm.googleapis.com/fcm/send",
+                            'body': 'ahahahha  sssssssssssssssssssss',
+                            'title': 'aaaaaaaaaaaaaaaaaaaaa'
+                        }
+                    }
+                    axios
+                        .post(
+                            "https://fcm.googleapis.com/fcm/send",
 
-                //             values1
-                //             ,
-                //             {
-                //                 headers: {
-                //                     "Content-Type": "application/json",
-                //                     Authorization:
-                //                         "key=AAAAhnaShsw:APA91bHVgM38GFYy6zVrICghMhrpZLpln3TCp7gU0ctAqKU6cIWM5oFKJGz1JyqtKHmM2pxfVptVZ0abU0qckm5hKPqjn6EaSacpBu8YYoliRJM1Jb_E0M-9hZH603q2UamC_hdSHCdf"
-                //                 }
-                //             }
-                //         )
-                //         .then(response => {
-                //             console.log("response" + response);
-                //         })
-                //         .catch(error => {
-                //             console.log(error);
-                //         });
-                // } catch (ex) {
-                //     console.log(ex)
-                // }
+                            values1
+                            ,
+                            {
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    Authorization:
+                                        "key=AAAAhnaShsw:APA91bHVgM38GFYy6zVrICghMhrpZLpln3TCp7gU0ctAqKU6cIWM5oFKJGz1JyqtKHmM2pxfVptVZ0abU0qckm5hKPqjn6EaSacpBu8YYoliRJM1Jb_E0M-9hZH603q2UamC_hdSHCdf"
+                                }
+                            }
+                        )
+                        .then(response => {
+                            console.log("response" + response);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                } catch (ex) {
+                    console.log(ex)
+                }
 
-                //  alert(a.data);
+                alert(a1.data);
             } catch (ex) {
                 console.log(ex)
             }

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const Navigation1 = () => {
+const Navigation5 = () => {
     const navigate = useNavigate()
     return (
         <div>
@@ -21,35 +21,21 @@ const Navigation1 = () => {
                         <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}
-                                onClick={() => navigate('/dashboard')}
+                                onClick={() => navigate('/login')}
                             >
-                                DashBoard
+                                Login
                             </Button>
 
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                               
-                                onClick={() => navigate('/acceptAgentAndServiceProviders')}
+                                onClick={() => navigate('/register')}
 
                             >
-                                Agents And ServiceProviders
+                                Register
                             </Button>
                          
-                            <Button
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                                // className={classes.tabs}
-                                onClick={() => navigate('/changePackage')}
-                            >
-                                Change Package
-                            </Button>
-                            <Button
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                                // className={classes.tabs}
-                                style={{ float: 'right' }}
-                                onClick={() => navigate('/login')}
-                            >
-                                Logout
-                            </Button>
+                         
                         </Box>
                     </Toolbar>
                 </Container>
@@ -60,4 +46,4 @@ const Navigation1 = () => {
 
 };
 
-export default Navigation1;
+export default Navigation5;

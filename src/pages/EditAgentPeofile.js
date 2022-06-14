@@ -7,6 +7,7 @@ import { Card } from 'react-bootstrap';
 import Popup from '../controls/Popup'
 import { useNavigate } from 'react-router-dom'
 
+import Navigation4 from "../navigations/Navigation4"
 
 import Button from '@mui/material/Button';
 
@@ -21,11 +22,14 @@ const EditAgentProfile = () => {
 
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);
+    if (localStorage.getItem("userType") !== "agent") {
+        navigate('/login')
+    }
 
 
     const loadProfile = async () => {
         try {
-            const response = await axios.get("http://localhost:9000/users/getAgentById/4");
+            const response = await axios.get("http://localhost:9000/users/getAgentById/" + localStorage.getItem("userId"));
             console.log(response.data)
             setUserName(response.data.users.userName);
             setAddress(response.data.users.address);
@@ -64,18 +68,18 @@ const EditAgentProfile = () => {
             image1 = "http://localhost:9000/" + resImage.data;
         }
 
-        
+
 
         var formData2 = new FormData();
         formData2.append("image", image1);
         formData2.append("userName", document.getElementById("userName").value);
-        formData2.append("address",  document.getElementById("address").value);
+        formData2.append("address", document.getElementById("address").value);
         formData2.append("contactNumber", document.getElementById("contactNumber").value);
         formData2.append("userId", userId);
 
 
 
-        var a = await axios.post("http://localhost:9000/users/updateUser" ,formData2 );
+        var a = await axios.post("http://localhost:9000/users/updateUser", formData2);
         alert(a.data)
         window.location.reload();
 
@@ -84,6 +88,8 @@ const EditAgentProfile = () => {
     }
     return (
         <div>
+            <Navigation4></Navigation4>
+
             <Popup
                 show={show1}
                 handleClose={handleClose1}

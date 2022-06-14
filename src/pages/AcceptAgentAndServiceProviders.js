@@ -8,11 +8,17 @@ import { Card } from 'react-bootstrap';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom'
 
 const AcceptAgentAndServiceProviders = () => {
 
     const [agents, setAgents] = useState([]);
     const [serviceProviders, setServiceProviders] = useState([]);
+
+    const navigate = useNavigate();
+    if (localStorage.getItem("userType") !== "admin") {
+        navigate('/login')
+    }
 
 
     const loadServiceProviders = async () => {

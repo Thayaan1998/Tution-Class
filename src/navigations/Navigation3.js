@@ -43,6 +43,14 @@ const Navigation3 = () => {
                             >
                               Profile
                             </Button>
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                // className={classes.tabs}
+                                style={{ float: 'right' }}
+                                onClick={() => navigate('/login')}
+                            >
+                                Logout
+                            </Button>
                         </Box>
                     </Toolbar>
                 </Container>

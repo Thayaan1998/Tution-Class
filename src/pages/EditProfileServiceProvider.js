@@ -24,10 +24,14 @@ const EditProfileServiceProvider = () => {
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);
 
+    if (localStorage.getItem("userType") !== "serviceProvider") {
+        navigate('/login')
+    }
+
 
     const loadProfile = async () => {
         try {
-            const response = await axios.get("http://localhost:9000/users/getServiceProviderById/20");
+            const response = await axios.get("http://localhost:9000/users/getServiceProviderById/"+localStorage.getItem("userId"));
             console.log(response.data)
             setUserName(response.data.users.userName);
             setAddress(response.data.users.address);

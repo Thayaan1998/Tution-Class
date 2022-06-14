@@ -10,13 +10,17 @@ import Input from '../controls/Input'
 
 import Grid from '@mui/material/Grid';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { useNavigate } from 'react-router-dom'
 
 
 const ChangePackage = () => {
     const [editing, setEditing] = useState(false);
     const [buttonText, setButtonText] = useState("Edit");
 
-
+    const navigate = useNavigate();
+    if (localStorage.getItem("userType") !== "admin") {
+        navigate('/login')
+    }
     const [package1, setPackage1] = useState(1);
 
 

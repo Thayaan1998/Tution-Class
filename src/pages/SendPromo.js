@@ -4,13 +4,20 @@ import Input from '../controls/Input'
 import Grid from '@mui/material/Grid';
 import { Card } from 'react-bootstrap';
 import Button from '@mui/material/Button';
+import Navigation4 from "../navigations/Navigation4"
 
+import { useNavigate } from 'react-router-dom'
 
 
 const SendPromo = () => {
     const [serviceProviders, setServiceProviders] = React.useState([]);
 
     const [serviceProvider, setServiceProvider] = useState('');
+
+    const navigate = useNavigate();
+    if (localStorage.getItem("userType") !== "agent") {
+        navigate('/login')
+    }
 
 
     const handleChange = (e) => {
@@ -45,7 +52,7 @@ const SendPromo = () => {
             let values = {
                 serviceproviderWithPromoId: 0,
                 serviceproviderId: document.getElementById("id1").value,
-                agentId: 1
+                agentId: localStorage.getItem("userId")
             }
             const headers = {
                 'Content-Type': 'application/json'
@@ -65,6 +72,8 @@ const SendPromo = () => {
     return (
         <div
         >
+            <Navigation4></Navigation4>
+
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid item xs={4} >
                     {/* <Card style={{ width: '18rem', margin: '20px' }}>
@@ -110,7 +119,7 @@ const SendPromo = () => {
                             </Card.Text>
                             <select value={serviceProvider} id="id1" onChange={handleChange} class="form-select" aria-label="Default select example" style={{ margin: '30px', width: '400px' }}>
                                 {serviceProviders.map(item => {
-                                    return (<option key={item.serviceProviderId} value={item.serviceProviderId}>{item.servideProviderName}</option>);
+                                    return (<option key={item.serviceProviderId} value={item.serviceProviderId}>{item.users.userName}</option>);
                                 })}
                             </select>
                             <Button variant="contained" color="primary" type="submit" style={{ margin: '30px' }}>Send Promo</Button>
