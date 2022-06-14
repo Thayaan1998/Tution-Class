@@ -4,7 +4,8 @@ import Input from '../controls/Input'
 
 import AddOTPNumber from "./AddOTPNumber";
 import Popup from '../controls/Popup'
-
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 
 const Login = () => {
@@ -21,7 +22,7 @@ const Login = () => {
 
 
     const handleClose = () => setShow(false);
-   
+
 
     const validate = (fieldValues = input) => {
         let temp = { ...errors }
@@ -85,12 +86,12 @@ const Login = () => {
                 var a = await axios.post("http://localhost:9000/users/login", values, { headers });
 
                 console.log(a.data);
-                if(a.data!="Not valid username or password"){
+                if (a.data != "Not valid username or password") {
                     setOtpNumber(a.data)
                     setShow(true)
                 }
 
-               
+
 
                 // alert(a.data);
             } catch (ex) {
@@ -110,36 +111,49 @@ const Login = () => {
                 title="Add OtpNumber"
             >
                 <AddOTPNumber
-                  
+
                     otpNumber={otpNumber}
-                    
+
                 />
             </Popup>
 
-            <form onSubmit={handleSubmit} autoComplete="off">
 
 
 
-                <Input
-                    id="email"
-                    value={input.email}
-                    handleInputChange={handleInputChange}
-                    placeholder="Enter Email......"
-                    errors={errors.email}
-                />
+            <div style={{ marginTop: "48px", float: 'left', marginLeft: "550px" }}>
+                <Card sx={{ height: 400, width: 400 }}>
+                    <CardContent>
+                        <h3 style={{ marginLeft: '20px' }}>Welcome To Service Hub</h3>
+
+                        <form onSubmit={handleSubmit} autoComplete="off">
 
 
-                <Input
-                    id="password"
-                    value={input.password}
-                    handleInputChange={handleInputChange}
-                    placeholder="Enter password......"
-                    errors={errors.password}
-                />
 
-                <button type="submit" class="btn btn-primary" style={{ margin: '30px' }}>Login</button>
+                            <Input
+                                id="email"
+                                value={input.email}
+                                handleInputChange={handleInputChange}
+                                placeholder="Enter Email......"
+                                errors={errors.email}
+                            />
 
-            </form>
+
+                            <Input
+                                id="password"
+                                value={input.password}
+                                handleInputChange={handleInputChange}
+                                placeholder="Enter password......"
+                                errors={errors.password}
+                            />
+
+                            <button type="submit" class="btn btn-primary" style={{ margin: '30px', width: '84%' }}>Login</button>
+
+                        </form>
+
+
+                    </CardContent>
+                </Card>
+            </div>
 
 
         </div>

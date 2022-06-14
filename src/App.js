@@ -13,8 +13,20 @@ import PostRequirement from './pages/PostRequirement'
 import AskQuestion from './pages/AskQuestion'
 import AddSubscribe from './pages/AddSubscribe'
 import GetPostRequirements from './pages/GetPostRequirements'
+import GetServiceProvider from './pages/GetServiceProvider'
+import GetQuotation from './pages/GetQuotation'
+import EditProfileServiceProvider from './pages/EditProfileServiceProvider'
+import EditAgentPeofile from './pages/EditAgentPeofile'
+import Theme1 from './themes/Theme1'
+import Theme2 from './themes/Theme2'
+import Theme3 from './themes/Theme3'
+
+import ChangePackage from './pages/ChangePackage'
+
 
 import SendPromo from './pages/SendPromo'
+import AcceptAgentAndServiceProviders from './pages/AcceptAgentAndServiceProviders'
+
 import Profile from './pages/Profile'
 
 import Login from './pages/Login'
@@ -35,11 +47,11 @@ function App() {
       toggleThemeMode: () => {
 
         if (document.getElementById("theme").value == "theme1") {
-          setTheme(theme1);
+          // setTheme(theme1);
         } else if (document.getElementById("theme").value == "theme2") {
-          setTheme(theme2);
+          // setTheme(theme2);
         } else if (document.getElementById("theme").value == "theme3") {
-          setTheme(theme3);
+          // setTheme(theme3);
         }
 
 
@@ -48,63 +60,26 @@ function App() {
     [],
   );
 
-  const theme1 = createTheme({
-    palette: {
 
-      primary: blue,
-      secondary: red
 
-    },
-    typography: {
-      useNextVariants: true,
+
+  const [theme, setTheme] = React.useState(Theme1);
+
+  useEffect(() => {
+    if (localStorage.getItem("theme") === "theme1") {
+      setTheme(Theme1);
+    } else if (localStorage.getItem("theme") === "theme2") {
+      setTheme(Theme2);
+    }else if (localStorage.getItem("theme") === "theme3") {
+      setTheme(Theme3);
     }
-
-  });
-
-  const theme2 = createTheme({
-    palette: {
-
-      primary: purple,
-      secondary: red
-
-    },
-    typography: {
-      useNextVariants: true,
-    }
-
-  });
-
-  const theme3 = createTheme({
-    palette: {
-
-      primary: pink,
-      secondary: red
-
-    },
-    typography: {
-      useNextVariants: true,
-    }
-
-  });
-
-
-  const [theme, setTheme] = React.useState(theme2);
-
+  }, []);
 
   return (
     <div className="App">
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
 
-          <select class="form-select" aria-label="Default select example" style={{ width: '300px' }} id="theme" onClick={colorMode.toggleThemeMode}>
-            <option selected>Open this select menu</option>
-            <option value="theme1">blue</option>
-            <option value="theme2">purple</option>
-            <option value="theme3">pink</option>
-          </select>
-          <Button variant="contained" color="primary">
-            Hello
-          </Button>
           <BrowserRouter>
             <Routes>
 
@@ -119,7 +94,12 @@ function App() {
               <Route path="/reviews" element={<Reviews />} />
               <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} />
-
+              <Route path="/changePackage" element={<ChangePackage />} />
+              <Route path="/getServiceProviders" element={<GetServiceProvider />} />
+              <Route path="/getQuotation" element={<GetQuotation />} />
+              <Route path="/editProfileServiceProvider" element={<EditProfileServiceProvider />} />
+              <Route path="/editAgentProfile" element={<EditAgentPeofile />} />
+              <Route path="/acceptAgentAndServiceProviders" element={<AcceptAgentAndServiceProviders />} />
               <Route path="/getPostRequirements" element={<GetPostRequirements />} />
             </Routes>
           </BrowserRouter>

@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from '../controls/Input'
 import TextArea from '../controls/TextArea'
+import Navigation2 from "../navigations/Navigation2"
+import { Card } from 'react-bootstrap';
 
+
+import Button from '@mui/material/Button';
 
 const PostRequirement = () => {
 
     const [input, setInput] = useState({
-        location: "",
+        location: 1,
         requirementDetails: "",
         email: "",
         phonenumber: "",
@@ -17,6 +21,29 @@ const PostRequirement = () => {
 
 
     const [errors, setErrors] = useState({});
+
+    const [locations, setLocations] = React.useState([]);
+
+
+
+    const loadLocations = async () => {
+        try {
+            const response = await axios.get("http://localhost:9000/users/getBranches");
+            setLocations(response.data)
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const handleChange1 = e => setInput({location:e.target.value});
+
+
+    useEffect(() => {
+        loadLocations();
+    }, []);
 
     const validate = (fieldValues = input) => {
         let temp = { ...errors }
@@ -32,14 +59,12 @@ const PostRequirement = () => {
             } else {
                 temp.email = ""
             }
-        if ('location' in fieldValues)
-            temp.location = fieldValues.location ? "" : "This field is required."
+       
 
         if ('phonenumber' in fieldValues)
             temp.phonenumber = fieldValues.phonenumber.length > 9 ? "" : "The length should be 10"
 
-        if ('category' in fieldValues)
-            temp.category = fieldValues.category ? "" : "This field is required."
+       
 
         setErrors({
             ...temp
@@ -63,24 +88,28 @@ const PostRequirement = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-    
-
         if (validate()) {
 
             var values = {
                 requirementId: 0,
-                location: input.location,
+                branch:   {
+                    branchId:input.location
+                },
                 requirementDetails: input.requirementDetails,
                 email: input.email,
                 phonenumber: input.phonenumber,
                 category: input.category,
-                serviceConsumerId: 1
+                serviceConsumer: {
+                    serviceConsumerId:10
+
+                }
             }
 
+            console.log(values)
 
 
-            
+
+
 
             try {
                 const headers = {
@@ -91,40 +120,40 @@ const PostRequirement = () => {
 
                 console.log(a1);
 
-                try{
-                    var values1={
-                        'to': 'cpObYHnYGNebcR3htbqkI7:APA91bF6LaMPVhiIlkDqS4DZ5J9PbK3Iav2FyArt9KtszuCnc6ywjzjWfYzQ2xUPiAlossBlt84UFDMgsHvoPI6yHjYyssv9zXSyvJcWo6lxpO6erjtUt9M2mxOIJbdmI1QpbstMBcqJ',
-                        'notification': {
-        
-                         'body': 'ahahahha  sssssssssssssssssssss',
-                         'title': 'aaaaaaaaaaaaaaaaaaaaa'
-                        }
-                    }
-                      axios
-                        .post(
-                          "https://fcm.googleapis.com/fcm/send",
-        
-                            values1
-                          ,
-                          {
-                            headers: {
-                              "Content-Type": "application/json",
-                              Authorization:
-                                "key=AAAAhnaShsw:APA91bHVgM38GFYy6zVrICghMhrpZLpln3TCp7gU0ctAqKU6cIWM5oFKJGz1JyqtKHmM2pxfVptVZ0abU0qckm5hKPqjn6EaSacpBu8YYoliRJM1Jb_E0M-9hZH603q2UamC_hdSHCdf"
-                            }
-                          }
-                        )
-                        .then(response => {
-                          console.log("response" + response);
-                        })
-                        .catch(error => {
-                          console.log(error);
-                        });
-                }catch(ex){
-                     console.log(ex)
-                }
+                // try {
+                //     var values1 = {
+                //         'to': 'cpObYHnYGNebcR3htbqkI7:APA91bF6LaMPVhiIlkDqS4DZ5J9PbK3Iav2FyArt9KtszuCnc6ywjzjWfYzQ2xUPiAlossBlt84UFDMgsHvoPI6yHjYyssv9zXSyvJcWo6lxpO6erjtUt9M2mxOIJbdmI1QpbstMBcqJ',
+                //         'notification': {
 
-              //  alert(a.data);
+                //             'body': 'ahahahha  sssssssssssssssssssss',
+                //             'title': 'aaaaaaaaaaaaaaaaaaaaa'
+                //         }
+                //     }
+                //     axios
+                //         .post(
+                //             "https://fcm.googleapis.com/fcm/send",
+
+                //             values1
+                //             ,
+                //             {
+                //                 headers: {
+                //                     "Content-Type": "application/json",
+                //                     Authorization:
+                //                         "key=AAAAhnaShsw:APA91bHVgM38GFYy6zVrICghMhrpZLpln3TCp7gU0ctAqKU6cIWM5oFKJGz1JyqtKHmM2pxfVptVZ0abU0qckm5hKPqjn6EaSacpBu8YYoliRJM1Jb_E0M-9hZH603q2UamC_hdSHCdf"
+                //                 }
+                //             }
+                //         )
+                //         .then(response => {
+                //             console.log("response" + response);
+                //         })
+                //         .catch(error => {
+                //             console.log(error);
+                //         });
+                // } catch (ex) {
+                //     console.log(ex)
+                // }
+
+                //  alert(a.data);
             } catch (ex) {
                 console.log(ex)
             }
@@ -137,6 +166,7 @@ const PostRequirement = () => {
     return (
         <div
         >
+            <Navigation2></Navigation2>
 
             <form onSubmit={handleSubmit} autoComplete="off">
 
@@ -148,13 +178,13 @@ const PostRequirement = () => {
                     placeholder="Enter category......"
                     errors={errors.category}
                 />
-                <Input
-                    id="location"
-                    value={input.location}
-                    handleInputChange={handleInputChange}
-                    placeholder="Enter location......"
-                    errors={errors.location}
-                />
+               
+               <label style={{ marginLeft: '30px' }}>Select location</label>
+                <select value={input.location} onChange={handleChange1} class="form-select" style={{ marginLeft: '30px', width: '96%' }} aria-label="Default select example">
+                    {locations.map(item => {
+                        return (<option key={item.branchId} value={item.branchId}>{item.branchName}</option>);
+                    })}
+                </select>
 
 
                 <Input
@@ -180,8 +210,8 @@ const PostRequirement = () => {
                     errors={errors.requirementDetails}
                 />
 
-                <button type="submit" class="btn btn-primary" style={{ margin: '30px' }} >Submit</button>
-                
+                <Button type="submit" variant="contained" color="primary"style={{ margin: '30px' }} >Post Requirment</Button>
+
 
             </form>
 
