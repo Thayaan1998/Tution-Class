@@ -31,9 +31,7 @@ import "../Style.css"
             const response = await axios.get("http://localhost:9000/subscribe/getSubscribe/"+localStorage.getItem("userId"));
             setPackage1(response.data)
             // setQuotations(response.data)
-            if(response.data.packages.packageName==="Gold"){
-                setShow2(true);
-             }
+            
 
 
         } catch (error) {
