@@ -16,6 +16,9 @@ const GetPostRequirements = () => {
 
     const [show1, setShow1] = useState(false);
 
+    const [show2, setShow2] = useState(false);
+
+
     const [requirementId, setRequirementId] = useState(0);
 
     const [serviceConsumerId, setServiceConsumerId] = useState(0);
@@ -24,7 +27,35 @@ const GetPostRequirements = () => {
         navigate('/login')
     }
 
+    const [package1, setPackage1] = useState("")
+
+
+    const loadPackage = async () => {
+        try {
+
+            const response = await axios.get("http://localhost:9000/subscribe/getSubscribe/" + localStorage.getItem("userId"));
+            console.log(response.data);
+            setPackage1(response.data)
+
+            
+
+          
+            // setQuotations(response.data)
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    useEffect(() => {
+        loadPackage();
+    }, []);
     const handleClose1 = () => setShow1(false);
+
+    const handleClose2 = () => setShow2(false);
+
 
     const loadRequirements = async () => {
         try {
@@ -32,6 +63,8 @@ const GetPostRequirements = () => {
             const response = await axios.get("http://localhost:9000/postrequirement/getPostRequirements");
             console.log(response.data);
             SetPostRequirement(response.data)
+
+
 
 
         } catch (error) {
@@ -53,9 +86,19 @@ const GetPostRequirements = () => {
         })
 
     const openQuotation = (requirementId, serviceConsumerId) => {
-        setShow1(true)
-        setRequirementId(requirementId)
-        setServiceConsumerId(serviceConsumerId)
+       
+        if(package1!=''){
+           if (package1.quotationcount!=0){
+            setShow1(true)
+            setRequirementId(requirementId)
+            setServiceConsumerId(serviceConsumerId)
+           }else{
+            alert("you can't send quotation")
+           }
+        }else{
+            alert("you didn't subscribed yet")
+        }
+       
     }
 
     const makeQuotation = async () => {
@@ -75,14 +118,12 @@ const GetPostRequirements = () => {
 
         }
 
-        console.log(values)
+        
+        var a1 = await axios.post("http://localhost:9000/postrequirement/postQuatation", values);
+        var a2 = await axios.get("http://localhost:9000/postrequirement/postQuatation/"+package1.subscribeId);
+        alert(a2.data);
 
-        const headers = {
-            'Content-Type': 'application/json'
-        };
 
-        var a1 = await axios.post("http://localhost:9000/postrequirement/postQuatation", values, { headers });
-        alert(a1.data);
         setShow1(false);
 
 
@@ -110,6 +151,14 @@ const GetPostRequirements = () => {
                 <Button variant="contained" color="primary" style={{ width: 250, margin: '10px' }}
                     onClick={() => makeQuotation()}>Make Quotation</Button>
 
+            </Popup>
+
+            <Popup
+                show={show2}
+                handleClose={handleClose2}
+                title="Make Quotation"
+            >
+             
             </Popup>
 
             <div >

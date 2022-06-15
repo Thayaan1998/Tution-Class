@@ -77,9 +77,9 @@ const AskQuestion = () => {
                     startDate: formatDate(new Date()),
                     cardNo: encryptPassword(input.cardNo),
                     packagesId: 1,
-                    serviceProviderId: 1,
-                    endDate: formatDate(todaysDate)
-                   
+                    serviceProviderId: localStorage.getItem("userId"),
+                    endDate: formatDate(todaysDate),
+                    quotationcount:250
                 }
 
                 console.log(values);

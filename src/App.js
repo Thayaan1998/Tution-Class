@@ -19,6 +19,13 @@ import EditProfileServiceProvider from './pages/EditProfileServiceProvider'
 import EditAgentPeofile from './pages/EditAgentPeofile'
 import Dashboard from './pages/Dashboard'
 
+import PackagePage from './pages/PackagePage'
+import PackDetails from './pages/PackageDescription'
+import Payment from './pages/Payment'
+
+
+
+
 import Theme1 from './themes/Theme1'
 import Theme2 from './themes/Theme2'
 import Theme3 from './themes/Theme3'
@@ -102,6 +109,11 @@ function App() {
               <Route path="/editProfileServiceProvider" element={<EditProfileServiceProvider />} />
               <Route path="/editAgentProfile" element={<EditAgentPeofile />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path='/packages' element={<PackagePage/>}/>
+              <Route path='/packages_details/:id' element={<PackDetails/>}/>
+              <Route path='/payment/:id' element={<Payment/>}/>
+
+
 
               <Route path="/acceptAgentAndServiceProviders" element={<AcceptAgentAndServiceProviders />} />
               <Route path="/getPostRequirements" element={<GetPostRequirements />} />

@@ -124,6 +124,8 @@ const Login = () => {
                             var b = await axios.post("http://localhost:9000/users/login2", values, { headers });
 
                             console.log(b.data)
+                            setOtpNumber(b.data)
+
                             setUserType("serviceProvider")
                             setUserId(c.data.serviceProviderId)
                             setShow(true)

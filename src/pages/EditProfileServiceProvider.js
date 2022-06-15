@@ -28,10 +28,35 @@ const EditProfileServiceProvider = () => {
         navigate('/login')
     }
 
+    const [package1, setPackage1] = useState("")
+
+    const [status1, setStatus1] = useState("")
+
+
+    const loadPackage = async () => {
+        try {
+
+            const response = await axios.get("http://localhost:9000/subscribe/getSubscribe/" + localStorage.getItem("userId"));
+            console.log(response.data);
+            setPackage1(response.data)
+
+            setStatus1(response.data.status)
+            // setQuotations(response.data)
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    useEffect(() => {
+        loadPackage();
+    }, []);
 
     const loadProfile = async () => {
         try {
-            const response = await axios.get("http://localhost:9000/users/getServiceProviderById/"+localStorage.getItem("userId"));
+            const response = await axios.get("http://localhost:9000/users/getServiceProviderById/" + localStorage.getItem("userId"));
             console.log(response.data)
             setUserName(response.data.users.userName);
             setAddress(response.data.users.address);
@@ -102,8 +127,29 @@ const EditProfileServiceProvider = () => {
         [],
     );
 
-   const changeTheme=()=>{
-      
+    const subscribe=async()=>{
+        try {
+            var formData2 = new FormData();
+
+            formData2.append("status", "unsubscribed");
+            formData2.append("subscribeId",package1.subscribeId);
+            const response = await axios.post("http://localhost:9000/subscribe/updateSubscribe",formData2 );
+            console.log(response.data);
+            // setPackage1(response.data)
+
+            // setStatus1(response.data.status)
+            // setQuotations(response.data)
+            window.location.reload();
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const changeTheme = () => {
+
         if (document.getElementById("theme").value == "theme1") {
             localStorage.setItem("theme", "theme1");
         } else if (document.getElementById("theme").value == "theme2") {
@@ -190,6 +236,17 @@ const EditProfileServiceProvider = () => {
                 <Button variant="contained" color="primary" onClick={() => changeTheme()} style={{ margin: '30px', width: '87%' }}>
                     Change Theme
                 </Button>
+
+                {status1 === "subscribed" ? (
+
+                    <Button variant="contained" color="primary" onClick={() => subscribe()} style={{ margin: '30px', width: '87%' }}>
+                       Subscribe
+                    </Button>
+                ) : (
+
+                    <p>No Subscription</p>
+
+                )}
             </Card>
 
 
