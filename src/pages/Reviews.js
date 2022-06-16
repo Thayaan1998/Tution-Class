@@ -7,6 +7,8 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import CommentIcon from '@mui/icons-material/Comment';
 import Grid from '@mui/material/Grid';
+import Navigation2 from "../navigations/Navigation2"
+import Navigation3 from "../navigations/Navigation3"
 
 
 import Input from '../controls/Input'
@@ -68,7 +70,7 @@ const Reviews = () => {
             temp.repliesinputreply = fieldValues.repliesinputreply ? "" : "This field is required."
 
 
-       repliessetErrors({
+        repliessetErrors({
             ...temp
         })
         if (fieldValues == repliesinput)
@@ -114,7 +116,7 @@ const Reviews = () => {
             const response = await axios.post("http://localhost:9000/comments/postComment", variables, { headers });
             console.log(response)
             loadComments();
-          
+
             //  loadComments();
 
 
@@ -127,23 +129,23 @@ const Reviews = () => {
     }
     const submitReply = async () => {
         var variables = {
-            
+
             'name': document.getElementById("repliesinputname").value,
-            'email':document.getElementById("repliesinputemail").value,
+            'email': document.getElementById("repliesinputemail").value,
             'reply': repliesinput.repliesinputreply,
             'commentId': commentId,
             'replyId': 0
         };
 
         console.log(variables)
-      
 
-        let increaserepliesCount=repliesCount+1;
+
+        let increaserepliesCount = repliesCount + 1;
         try {
             const headers = {
                 'Content-Type': 'application/json'
             };
-            const response = await axios.post("http://localhost:9000/comments/postReplies/"+increaserepliesCount, variables, { headers });
+            const response = await axios.post("http://localhost:9000/comments/postReplies/" + increaserepliesCount, variables, { headers });
             console.log(response)
             loadComments();
             try {
@@ -151,11 +153,11 @@ const Reviews = () => {
                 console.log(response2.data);
                 //  await loadComments();
                 SetReplies(response2.data)
-    
+
             } catch (error) {
-    
+
             }
-     
+
 
 
 
@@ -342,7 +344,7 @@ const Reviews = () => {
         }
     }
 
-    const replyOnClick = async (commentId,repliesCount) => {
+    const replyOnClick = async (commentId, repliesCount) => {
         console.log(commentId);
         setCommentId(commentId);
         setrepliesCount(repliesCount)
@@ -362,6 +364,14 @@ const Reviews = () => {
 
     return (
         <div>
+            {localStorage.getItem("userType") === "serviceConsumer" ? (
+
+              <Navigation2></Navigation2>
+            ) : (
+
+                <Navigation3></Navigation3>
+
+            )}
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid item xs={6}>
                     <Input
@@ -465,7 +475,7 @@ const Reviews = () => {
 
                                                     marginLeft: "20px"
                                                 }}
-                                                onClick={() => replyOnClick(row.commentsId,row.replies)}
+                                                onClick={() => replyOnClick(row.commentsId, row.replies)}
 
 
                                             />
@@ -484,7 +494,7 @@ const Reviews = () => {
 
                 </Grid>
                 <Grid item xs={6}>
-                <Input
+                    <Input
                         id="repliesinputname"
                         value={repliesinput.repliesinputname}
                         handleInputChange={handleInputChange2}
@@ -505,8 +515,8 @@ const Reviews = () => {
                         placeholder="Enter Reply......"
                         errors={errors.repliesinputreply}
                     />
-                <button class="btn btn-primary" style={{ margin: '30px' }}
-                 onClick={submitReply}>Submit</button>
+                    <button class="btn btn-primary" style={{ margin: '30px' }}
+                        onClick={submitReply}>Submit</button>
 
                     {
 

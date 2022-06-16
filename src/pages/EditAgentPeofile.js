@@ -22,11 +22,18 @@ const EditAgentProfile = () => {
 
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);
+
+    
+    const [show2, setShow2] = useState(false);
+    const handleClose2 = () => setShow2(false);
+
+
     if (localStorage.getItem("userType") !== "agent") {
         navigate('/login')
     }
 
 
+    const[promocount,setPromoCount]=useState("");
     const loadProfile = async () => {
         try {
             const response = await axios.get("http://localhost:9000/users/getAgentById/" + localStorage.getItem("userId"));
@@ -35,7 +42,8 @@ const EditAgentProfile = () => {
             setAddress(response.data.users.address);
             setImage(response.data.users.image);
             setContactNumber(response.data.users.contactNumber);
-            setUserId(response.data.users.userId)
+            setUserId(response.data.users.userId);
+            setPromoCount(response.data.promocount)
         } catch (error) {
             console.log(error);
         }
@@ -86,9 +94,22 @@ const EditAgentProfile = () => {
 
 
     }
+
+    const getReport=()=>{
+        setShow2(true);
+    }
     return (
         <div>
             <Navigation4></Navigation4>
+
+            <Popup
+                show={show2}
+                handleClose={handleClose2}
+                title="Report for promo"
+            >
+              <p> used promo count :{promocount}</p> 
+              <p>Collected Amount :1000Rs</p> 
+            </Popup>    
 
             <Popup
                 show={show1}
@@ -150,7 +171,10 @@ const EditAgentProfile = () => {
                 <p style={{ marginLeft: '30px' }}>ContactNumber: {contactNumber}</p>
                 <p style={{ marginLeft: '30px' }}>Address: {address}</p>
                 <Button variant="contained" color="primary" style={{ margin: '30px', width: '87%' }} onClick={() => editProfile()}>Edit Profile</Button>
+                <Button variant="contained" color="primary" style={{ margin: '30px', width: '87%' }} onClick={() => getReport()}>Report</Button>
+
             </Card>
+
 
         </div>
 

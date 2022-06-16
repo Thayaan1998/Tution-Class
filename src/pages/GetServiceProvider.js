@@ -29,6 +29,8 @@ const GetServiceProvider = () => {
     const [email, setEmail] = useState("");
     const [contactNumber, setContactNumber] = useState("");
     const [address, setAddress] = useState("");
+    const [image, setImage] = useState("");
+    
 
     if (localStorage.getItem("userType") !== "serviceConsumer") {
         navigate('/login')
@@ -44,6 +46,7 @@ const GetServiceProvider = () => {
             const response = await axios.get("http://localhost:9000/users/getServiceProvicer1/" + location + "," + category);
             console.log(response.data);
             SetServiceProviders(response.data)
+
 
 
         } catch (error) {
@@ -76,13 +79,15 @@ const GetServiceProvider = () => {
     }, []);
 
 
-    const viewProfile = (userName, email, contactNumber, address) => {
-
-        setName(userName)
-        setEmail(email)
-        setContactNumber(contactNumber)
-        setAddress(address)
+    const viewProfile = (users) => {
+        console.log(users)
+       
+        setName(users.userName)
+        setEmail(users.email)
+        setContactNumber(users.contactNumber)
+        setAddress(users.address)
         setShow1(true)
+        setImage(users.image)
 
 
 
@@ -111,6 +116,11 @@ const GetServiceProvider = () => {
                 handleClose={handleClose1}
                 title="Profile Details"
             >
+                <img
+                    src={image}
+                    style={{ heigth: '200px', width: '150px', marginLeft: '150px' }}
+                    alt="new"
+                />
                 <p >Name: {name}</p>
                 <p >Email: {email}</p>
                 <p >Address: {address}</p>
@@ -169,7 +179,7 @@ const GetServiceProvider = () => {
                                     <Grid item xs={6}>
                                         <Card.Body>
                                             <Button variant="contained" color="primary" style={{ width: 200, margin: '10px' }}
-                                                onClick={() => viewProfile(row.users.userName, row.users.email, row.users.userName, row.users.contactNumber, row.users.address)}>View Profile</Button>
+                                                onClick={() => viewProfile(row.users)}>View Profile</Button>
                                             <Button variant="contained" color="primary" style={{ width: 200, margin: '10px' }}>Chat</Button>
                                         </Card.Body>
                                     </Grid>

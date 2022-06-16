@@ -46,10 +46,32 @@ const Navigation2 = () => {
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}
+                                onClick={() => navigate('/reviews')}
+                            >
+                               reviews
+                            </Button>
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                // className={classes.tabs}
+                                onClick={() => navigate('/askQuestion')}
+                            >
+                               Ask Questions
+                            </Button>
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                // className={classes.tabs}
                                 style={{ float: 'right' }}
                                 onClick={() => navigate('/login')}
                             >
                                 Logout
+                            </Button>
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                // className={classes.tabs}
+                                style={{ float: 'right' }}
+                                // onClick={() => navigate('/login')}
+                            >
+                                 {localStorage.getItem("userName")}
                             </Button>
                         </Box>
                     </Toolbar>

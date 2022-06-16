@@ -64,7 +64,9 @@ const Payment = () => {
       price: 400,
       image: require('../GoldIcon.png'),
       color: '#e6ac00',
-      quotationcount: 400
+      quotationcount: 400,
+      discount: 200
+
 
     },
     {
@@ -73,7 +75,8 @@ const Payment = () => {
       price: 500,
       image: require('../PlatinumIcon.png'),
       color: '#6a6b6b',
-      quotationcount: 500
+      quotationcount: 500,
+      discount: 300
     },
     {
       id: 3,
@@ -81,7 +84,8 @@ const Payment = () => {
       price: 300,
       image: require('../SilverIcon.png'),
       color: '#b7babc',
-      quotationcount: 300
+      quotationcount: 300,
+      discount: 100
 
 
     }
@@ -89,17 +93,17 @@ const Payment = () => {
 
   const formatDate = (date) => {
     var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
     if (month.length < 2)
-        month = '0' + month;
+      month = '0' + month;
     if (day.length < 2)
-        day = '0' + day;
+      day = '0' + day;
 
     return [year, month, day].join('-');
-}
+  }
 
   const handleSubmit = async () => {
     // if (validate()) {
@@ -111,14 +115,14 @@ const Payment = () => {
           startDate: formatDate(new Date()),
           cardNo: encryptPassword(document.getElementById("cardNo").value),
           packages: {
-            packageId:packagedetails[id - 1].id
+            packageId: packagedetails[id - 1].id
           },
           serviceProvider: {
-            serviceProviderId:localStorage.getItem("userId")
+            serviceProviderId: localStorage.getItem("userId")
           },
           endDate: formatDate(todaysDate),
           quotationcount: packagedetails[id - 1].quotationcount,
-          status:"subscribed"
+          status: "subscribed"
         }
 
         console.log(values);
@@ -127,11 +131,17 @@ const Payment = () => {
         };
         var res2 = await axios.post("http://localhost:9000/subscribe/addSubscribe", values, { headers });
         alert(res2.data);
+
+        if( document.getElementById("promoCode").value!==""){
+          var res3 = await axios.get("http://localhost:9000/users/updatePromoCount/" + document.getElementById("promoCode").value, { headers });
+          console.log(res3.data)
+  
+          alert("by promocode you got discount amount "+packagedetails[id - 1].discount);
+        }
+        
       } catch (ex) {
         console.log(ex);
       }
-
-
 
 
 
@@ -149,6 +159,11 @@ const Payment = () => {
         </Card>
         <Card>
           <Card.Body style={{ padding: '10%' }} >
+            <Input
+              id="promoCode"
+              placeholder="Enter Promocode......"
+
+            />
             <Form>
               <h1 style={{ fontSize: "30px", fontFamily: "Trebuchet MS", textAlign: "center" }}><b>Payment</b></h1>
               <Table >
@@ -192,7 +207,8 @@ const Payment = () => {
                 </Form.Group>
               </Row>
 
-              <Button variant="primary" onClick ={() => handleSubmit()}>
+
+              <Button variant="primary" onClick={() => handleSubmit()}>
                 Submit
               </Button>
             </Form>

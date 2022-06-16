@@ -34,6 +34,8 @@ import ChangePackage from './pages/ChangePackage'
 
 
 import SendPromo from './pages/SendPromo'
+import GetQuestions from './pages/GetQuestions'
+
 import AcceptAgentAndServiceProviders from './pages/AcceptAgentAndServiceProviders'
 
 import Profile from './pages/Profile'
@@ -110,6 +112,8 @@ function App() {
               <Route path="/editAgentProfile" element={<EditAgentPeofile />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path='/packages' element={<PackagePage/>}/>
+              <Route path='/getquestion' element={<GetQuestions/>}/>
+
               <Route path='/packages_details/:id' element={<PackDetails/>}/>
               <Route path='/payment/:id' element={<Payment/>}/>
 

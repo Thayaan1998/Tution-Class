@@ -28,8 +28,12 @@ const Login = () => {
 
     const [userType, setUserType] = useState("");
     const [userId, setUserId] = useState("");
+    const [userName, setUserName] = useState("");
+
 
     localStorage.setItem("userType", "");
+    localStorage.setItem("userName", "");
+
     localStorage.setItem("userId", "");
 
 
@@ -128,6 +132,7 @@ const Login = () => {
 
                             setUserType("serviceProvider")
                             setUserId(c.data.serviceProviderId)
+                            setUserName(c.data.users.userName)
                             setShow(true)
 
                         } else if (a.data.userTypeId == 2) {
@@ -138,6 +143,7 @@ const Login = () => {
                             setOtpNumber(b.data)
                             setUserType("serviceConsumer")
                             setUserId(c.data.serviceConsumerId)
+                            setUserName(c.data.users.userName)
 
 
                             setShow(true)
@@ -152,6 +158,7 @@ const Login = () => {
                             setOtpNumber(b.data)
                             setUserType("agent")
                             setUserId(c.data.agentId)
+                            setUserName(c.data.users.userName)
 
 
                             setShow(true)
@@ -190,6 +197,7 @@ const Login = () => {
                     otpNumber={otpNumber}
                     userType={userType}
                     userId={userId}
+                    userName={userName}
 
                 />
             </Popup>

@@ -45,6 +45,14 @@ const Navigation4 = () => {
                             >
                                 Logout
                             </Button>
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                // className={classes.tabs}
+                                style={{ float: 'right' }}
+                                // onClick={() => navigate('/login')}
+                            >
+                                 {localStorage.getItem("userName")}
+                            </Button>
                         </Box>
                     </Toolbar>
                 </Container>

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from '../controls/Input'
 import TextArea from '../controls/TextArea'
+import Navigation2 from "../navigations/Navigation2"
+import Button from '@mui/material/Button';
+
+import { useNavigate } from 'react-router-dom'
 
 const AskQuestion = () => {
     const [input, setInput] = useState({
@@ -12,6 +16,11 @@ const AskQuestion = () => {
     })
 
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+
+    if (localStorage.getItem("userType") !== "serviceConsumer") {
+        navigate('/login')
+    }
 
     const validate = (fieldValues = input) => {
         let temp = { ...errors }
@@ -30,8 +39,8 @@ const AskQuestion = () => {
         if ('description' in fieldValues)
             temp.description = fieldValues.description ? "" : "This field is required."
 
-        if ('inqueringAbout' in fieldValues)
-            temp.inqueringAbout = fieldValues.inqueringAbout ? "" : "This field is required."
+        // if ('inqueringAbout' in fieldValues)
+        //     temp.inqueringAbout = fieldValues.inqueringAbout ? "" : "This field is required."
 
         setErrors({
             ...temp
@@ -41,6 +50,26 @@ const AskQuestion = () => {
 
 
     }
+    const [inqueringAboutIds, setinqueringAboutIds] = useState([]);
+    const [inqueringAboutId, setinqueringAboutId] = useState(0);
+    const handleChange1 = e => setinqueringAboutId(e.target.value);
+    const loadInqueringAbout = async () => {
+        try {
+
+            const response = await axios.get("http://localhost:9000/questions/getInqueringAbout");
+            console.log(response.data);
+            setinqueringAboutIds(response.data)
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    useEffect(() => {
+        loadInqueringAbout();
+    }, []);
 
 
     const handleInputChange = (e) => {
@@ -61,7 +90,7 @@ const AskQuestion = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (validate()) {
+        // if (validate()) {
             try {
 
                 var formData1 = new FormData();
@@ -70,32 +99,40 @@ const AskQuestion = () => {
                     "http://localhost:9000/questions/saveAttachment",
                     formData1
                 );
-                let attachmentFileName=res.data
+                let attachmentFileName = res.data
 
 
                 var values = {
                     questionId: 0,
-                    email:input.email,
-                    subject:input.subject,
+                    email: input.email,
+                    subject: input.subject,
                     description: input.description,
-                    inqueringAbout: input.inqueringAbout,
-                    attachments:attachmentFileName,
-                    serviceConsumerId :1
+                    inqueringAbout: {
+                        inqueringAboutId:inqueringAboutId
+                    },
+                    attachments: attachmentFileName,
+                    serviceConsumer:{
+                        serviceConsumerId:localStorage.getItem("userId")
+                    } 
                 }
                 const headers = {
                     'Content-Type': 'application/json'
                 };
-                var res2= await axios.post("http://localhost:9000/questions/addQuestion", values, { headers });
-               alert(res2.data);
+                var res2 = await axios.post("http://localhost:9000/questions/addQuestion", values, { headers });
+                alert(res2.data);
+                window.location.reload();
+
             } catch (ex) {
                 console.log(ex);
             }
-        }
+        // }
     }
 
 
     return (
         <div>
+            <Navigation2></Navigation2>
+
 
             <form onSubmit={handleSubmit} autoComplete="off">
 
@@ -122,20 +159,26 @@ const AskQuestion = () => {
                     errors={errors.description}
                 />
 
-                <Input
+                {/* <Input
                     id="inqueringAbout"
                     value={input.inqueringAbout}
                     handleInputChange={handleInputChange}
                     placeholder="Enter InqueringAbout......"
                     errors={errors.inqueringAbout}
-                />
+                /> */}
 
-           
+                <select value={inqueringAboutId} onChange={handleChange1} class="form-select" style={{ marginLeft: '30px', width: '96%' }} aria-label="Default select example">
+                    {inqueringAboutIds.map(item => {
+                        return (<option key={item.inqueringAboutId} value={item.inqueringAboutId}>{item.name}</option>);
+                    })}
+                </select>
+
+                <br></br>
 
                 <label style={{ marginLeft: "30px", float: 'left' }}>Select Attachment</label>
-                <input style={{ marginLeft: "30px", float: 'left' }} type="file" onChange={saveAttachment} />
+                <input style={{ marginLeft: "30px" }} type="file" onChange={saveAttachment} />
                 <br></br>
-                <button type="submit" class="btn btn-primary" style={{ margin: '30px' }}>Submit</button>
+                <Button type="submit" variant="contained" color="primary" style={{ margin: '30px' }}>Submit</Button>
 
             </form>
         </div>

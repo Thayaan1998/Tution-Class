@@ -8,9 +8,11 @@ const AddOTPNumber = (props) => {
     const navigate = useNavigate();
 
 
-    const { otpNumber,userType,userId } = props;
+    const { otpNumber,userType,userId,userName } = props;
 
     console.log(otpNumber)
+    console.log(userName)
+
     // console.log(userType)
     // console.log(userId)
 
@@ -57,6 +59,9 @@ const AddOTPNumber = (props) => {
                 console.log("login successful")
                 localStorage.setItem("userType",userType);
                 localStorage.setItem("userId",userId);
+                localStorage.setItem("userName",userName);
+
+
                 if(userType==="serviceProvider"){
                     navigate("/getPostRequirements")
                 }else if(userType==="serviceConsumer"){

@@ -26,6 +26,22 @@ const SendPromo = () => {
         console.log(e.target.value)
     }
 
+    const [promoCode, SetPromoCode] = useState("")
+    const loadProfile = async () => {
+        try {
+            const response = await axios.get("http://localhost:9000/users/getAgentById/" + localStorage.getItem("userId"));
+            console.log(response.data)
+            SetPromoCode(response.data.promoCode)
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    useEffect(() => {
+        loadProfile();
+    }, []);
+
 
 
 
@@ -64,6 +80,19 @@ const SendPromo = () => {
         }
 
 
+    }
+
+    const sendPromo=async ()=>{
+        try {
+            const response = await axios.get("http://localhost:9000/servicePromo/sendPromo/"+document.getElementById("email").value+","+promoCode);
+            console.log(response.data);
+            alert(response.data);
+            //setServiceProviders(response.data)
+
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -112,18 +141,21 @@ const SendPromo = () => {
 
                 <Grid item xs={8}>
                     <Card style={{ width: '60rem', margin: '20px' }}>
-                        <form onSubmit={handleSubmit} autoComplete="off">
+                        {/* <form onSubmit={handleSubmit} autoComplete="off"> */}
 
                             <Card.Text>
                                 <b>Degree:</b> BE Eng
                             </Card.Text>
-                            <select value={serviceProvider} id="id1" onChange={handleChange} class="form-select" aria-label="Default select example" style={{ margin: '30px', width: '400px' }}>
-                                {serviceProviders.map(item => {
-                                    return (<option key={item.serviceProviderId} value={item.serviceProviderId}>{item.users.userName}</option>);
-                                })}
-                            </select>
-                            <Button variant="contained" color="primary" type="submit" style={{ margin: '30px' }}>Send Promo</Button>
-                        </form>
+
+                            <textarea
+                                type="text"
+                                id="email"
+                                rows="1" cols="30"
+                                placeholder="send email"
+                            />
+
+                            <Button variant="contained" color="primary" style={{ margin: '30px' }} onClick={()=>{sendPromo()}}>Send Promo</Button>
+                        {/* </form> */}
                     </Card>
 
                 </Grid>
