@@ -91,11 +91,11 @@ const Login = () => {
                 address: "",
                 contactNumber: "",
                 postcode: "",
-                password: input.password,
+                password: passwordInput,
                 userTypeId: ""
             }
 
-            if (input.email == "admin@gmail.com" && input.password == "admin123") {
+            if (input.email == "admin@gmail.com" && passwordInput == "admin123") {
 
                 localStorage.setItem("userType", "admin");
                 localStorage.setItem("userId", "0");
@@ -114,7 +114,8 @@ const Login = () => {
                 if (a.data == '') {
                     alert("not valid username")
                 } else
-                    if (decryptPassword(a.data.password) !== input.password) {
+                    if (decryptPassword(a.data.password) !== passwordInput) {
+                        
                         alert("not valid password")
                     } else {
                         var c;
@@ -182,6 +183,12 @@ const Login = () => {
 
     }
 
+    const [passwordType, setPasswordType] = useState("password");
+    const [passwordInput, setPasswordInput] = useState("");
+    const handlePasswordChange = (evnt) => {
+        setPasswordInput(evnt.target.value);
+    }
+
 
     return (
         <div
@@ -224,13 +231,14 @@ const Login = () => {
                             />
 
 
-                            <Input
-                                id="password"
-                                value={input.password}
-                                handleInputChange={handleInputChange}
-                                placeholder="Enter password......"
-                                errors={errors.password}
-                            />
+                            <label style={{ marginLeft: '30px' }}>Password</label>
+
+                            <div className="input-group-btn">
+                                <input type={passwordType} onChange={handlePasswordChange} value={passwordInput} name="password" class="form-control" placeholder="Password" style={{ marginLeft: '30px', width: '304px' }} />
+                            </div>
+
+
+                            <br></br>
 
                             <Button type="submit" variant="contained" color="primary" style={{ margin: '30px', width: '84%' }}>Login</Button>
 

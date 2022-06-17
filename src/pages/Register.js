@@ -77,9 +77,6 @@ const Register = () => {
         if ('postcode' in fieldValues)
             temp.postcode = fieldValues.postcode ? "" : "This field is required."
 
-        if ('password' in fieldValues)
-            temp.password = fieldValues.password ? "" : "This field is required."
-
         setErrors({
             ...temp
         })
@@ -169,9 +166,8 @@ const Register = () => {
 
         } else {
             if (document.getElementById("companyName").value === "" ||
-                document.getElementById("licenceNumber").value === "" ||
-                document.getElementById("description").value === "" ||
-                document.getElementById("bussinessType").value == "") {
+                document.getElementById("licenceNumber").value === ""
+            ) {
                 alert("please enter values")
                 return;
             }
@@ -200,7 +196,7 @@ const Register = () => {
                 address: input.address,
                 contactNumber: input.contactNumber,
                 postcode: input.postcode,
-                password: encryptPassword(input.password),
+                password: encryptPassword(passwordInput),
                 userTypeId: userType,
                 image: attachmentFileName
             }
@@ -250,8 +246,6 @@ const Register = () => {
                         serviceConsumerId: 0,
                         companyName: document.getElementById("companyName").value,
                         licenceNumber: document.getElementById("licenceNumber").value,
-                        description: document.getElementById("description").value,
-                        businessType: document.getElementById("bussinessType").value,
                         branchId: branch,
                         users: a.data,
                     }
@@ -271,6 +265,18 @@ const Register = () => {
 
     }
 
+    const [passwordType, setPasswordType] = useState("password");
+    const [passwordInput, setPasswordInput] = useState("");
+    const handlePasswordChange = (evnt) => {
+        setPasswordInput(evnt.target.value);
+    }
+    const togglePassword = () => {
+        if (passwordType === "password") {
+            setPasswordType("text")
+            return;
+        }
+        setPasswordType("password")
+    }
     useEffect(() => {
         loadUserTypes();
     }, []);
@@ -339,11 +345,7 @@ const Register = () => {
                     placeholder="Enter LicenceNumber......"
 
                 />
-                <Input
-                    id="bussinessType"
-                    placeholder="Enter BussinessType......"
 
-                />
                 <label style={{ marginLeft: '30px' }}>Select Branch</label>
 
                 <select value={branch} onChange={handleChange1} class="form-select" style={{ marginLeft: '30px', width: '405px' }} aria-label="Default select example">
@@ -351,11 +353,7 @@ const Register = () => {
                         return (<option key={item.branchId} value={item.branchId}>{item.branchName}</option>);
                     })}
                 </select>
-                <TextArea
-                    id="description"
-                    placeholder="Enter Description......"
 
-                />
 
                 <Button variant="contained" color="primary" style={{ margin: '30px', width: '87%' }} onClick={() => makeRegister()}>Register</Button>
 
@@ -437,13 +435,23 @@ const Register = () => {
                                 placeholder="Enter postcode......"
                                 errors={errors.postcode}
                             />
-                            <Input
+                            {/* <Input
                                 id="password"
+                                type="password"
                                 value={input.password}
                                 handleInputChange={handleInputChange}
                                 placeholder="Enter password......"
                                 errors={errors.password}
-                            />
+                            /> */}
+                            <label style={{ marginLeft: '30px' }}>Password</label>
+
+                            <div className="input-group-btn">
+                                <input type={passwordType} onChange={handlePasswordChange} value={passwordInput} name="password" class="form-control" placeholder="Password" style={{ marginLeft: '30px', width: '405px' }} />
+                            </div>
+
+
+                            <br></br>             
+
 
                             <label style={{ marginLeft: '30px' }}>User Type</label>
 
