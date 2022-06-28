@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from '../controls/Input'
 import TextArea from '../controls/TextArea'
-import Navigation2 from "../navigations/Navigation2"
+import Navigation3 from "../navigations/Navigation3"
 import Button from '@mui/material/Button';
 
 import { useNavigate } from 'react-router-dom'
 
-const AskQuestion = () => {
+const AskQuestion2 = () => {
     const [input, setInput] = useState({
         email: "",
         subject: "",
@@ -18,7 +18,7 @@ const AskQuestion = () => {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
-    if (localStorage.getItem("userType") !== "serviceConsumer") {
+    if (localStorage.getItem("userType") !== "serviceProvider") {
         navigate('/login')
     }
 
@@ -78,24 +78,24 @@ const AskQuestion = () => {
         loadInqueringAbout();
     }, []);
 
-    const getServiceProviders = async () => {
-        try {
+    // const getServiceProviders = async () => {
+    //     try {
 
-            const response = await axios.get("http://localhost:9000/users/getServiceProviders2");
-            console.log(response.data);
-            // setinqueringAboutIds(response.data)
-            setserviceProviderIds(response.data);
-            setserviceProviderId(response.data[0].serviceProviderId)
+    //         const response = await axios.get("http://localhost:9000/users/getServiceProviders2");
+    //         console.log(response.data);
+    //         // setinqueringAboutIds(response.data)
+    //         setserviceProviderIds(response.data);
+    //         setserviceProviderId(response.data[0].serviceProviderId)
 
-        } catch (error) {
-            console.log(error);
-        }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
-    }
+    // }
 
-    useEffect(() => {
-        getServiceProviders();
-    }, []);
+    // useEffect(() => {
+    //     getServiceProviders();
+    // }, []);
 
 
     const handleInputChange = (e) => {
@@ -135,17 +135,16 @@ const AskQuestion = () => {
                 inqueringAbout: {
                     inqueringAboutId: inqueringAboutId
                 },
-                serviceConsumer: {
-                    serviceConsumerId: localStorage.getItem("userId")
-                },
-                serviceProviderId:serviceProviderId
+                serviceProvider: {
+                    serviceProviderId: localStorage.getItem("userId")
+                }
             }
 
             console.log(values)
             const headers = {
                 'Content-Type': 'application/json'
             };
-            var res2 = await axios.post("http://localhost:9000/questions/addQuestion", values, { headers });
+            var res2 = await axios.post("http://localhost:9000/questions/addQuestion2", values, { headers });
             alert(res2.data);
             window.location.reload();
 
@@ -158,7 +157,7 @@ const AskQuestion = () => {
 
     return (
         <div>
-            <Navigation2></Navigation2>
+            <Navigation3></Navigation3>
 
 
             <form onSubmit={handleSubmit} autoComplete="off">
@@ -195,13 +194,13 @@ const AskQuestion = () => {
                     })}
                 </select>
 
-                <label style={{ marginLeft: '30px' }}>Service Providers</label>
+                {/* <label style={{ marginLeft: '30px' }}>Service Providers</label>
 
                 <select value={serviceProviderId} onChange={handleChange2} class="form-select" style={{ marginLeft: '30px', width: '96%' }} aria-label="Default select example">
                     {serviceProviderIds.map(item => {
                         return (<option key={item.serviceProviderId} value={item.serviceProviderId}>{item.users.userName}</option>);
                     })}
-                </select>
+                </select> */}
 
                 <br></br>
 
@@ -212,4 +211,4 @@ const AskQuestion = () => {
         </div>
     );
 }
-export default AskQuestion;
+export default AskQuestion2;

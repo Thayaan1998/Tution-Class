@@ -176,6 +176,13 @@ const Register = () => {
 
         try {
 
+
+            
+        } catch (ex) {
+
+        }
+        try {
+
             var formData1 = new FormData();
             formData1.append("image", attachment);
             const resImage = await axios.post(
@@ -217,29 +224,73 @@ const Register = () => {
                         promoCode: "no",
                         users: a.data,
                         result: "not Accepted",
-                        promocount: 0
+                        promocount: 0,
+                        goldDiscount:400,
+                        platinumDiscount:600,
+                        silverDiscount:200
                     }
 
                     var b = await axios.post("http://localhost:9000/users/saveAgent", values1, { headers });
 
                     alert(b.data);
                 } else if (userType == 1) {
-                    var values1 = {
-                        serviceProviderId: 0,
-                        companyName: document.getElementById("companyName").value,
-                        licenceNumber: document.getElementById("licenceNumber").value,
-                        description: document.getElementById("description").value,
-                        location: branch,
-                        rating: 0,
-                        category: document.getElementById("category").value,
-                        users: a.data,
-                        result: "not Accepted"
+                    var c=null;
+                    if (document.getElementById("promoCode").value !== "") {
+                        // var res3 = await axios.get("http://localhost:9000/users/updatePromoCount/" + document.getElementById("promoCode").value, { headers });
+                        // console.log(res3.data)
+        
+                        // alert("by promocode you got discount amount "+packagedetails[id - 1].discount);
+        
+                       
+                        var c = await axios.get("http://localhost:9000/users/getAgent/" + document.getElementById("promoCode").value, { headers });
+                        if(c.data==''){
+                            alert("not valid promocode")
+                            return
+                        }
                     }
+                    var values1=null;
+                    if(c==null){
+                         values1 = {
+                            serviceProviderId: 0,
+                            companyName: document.getElementById("companyName").value,
+                            licenceNumber: document.getElementById("licenceNumber").value,
+                            description: document.getElementById("description").value,
+                            location: branch,
+                            rating: 0,
+                            category: document.getElementById("category").value,
+                            users: a.data,
+                            result: "not Accepted",
+                            goldDiscount:"no discount",
+                            platinumDiscount:"no discount",
+                            silverDiscount:"no discount"
+                        }   
+                    }else{
 
-
-
+                        values1 = {
+                            serviceProviderId: 0,
+                            companyName: document.getElementById("companyName").value,
+                            licenceNumber: document.getElementById("licenceNumber").value,
+                            description: document.getElementById("description").value,
+                            location: branch,
+                            rating: 0,
+                            category: document.getElementById("category").value,
+                            users: a.data,
+                            result: "not Accepted",
+                            goldDiscount:c.data.goldDiscount,
+                            platinumDiscount:c.data.platinumDiscount,
+                            silverDiscount:c.data.silverDiscount
+                        }
+                    }
+        
+                    console.log(values1)
                     var b = await axios.post("http://localhost:9000/users/saveServiceProvider", values1, { headers });
 
+                    if (document.getElementById("promoCode").value !== "") {
+                        var res3 = await axios.get("http://localhost:9000/users/updatePromoCount/" + document.getElementById("promoCode").value, { headers });
+                        console.log(res3.data)
+        
+                        // alert("by promocode you got discount amount "+packagedetails[id - 1].discount);
+                    }
                     alert(b.data);
                 } else {
                     var values1 = {
@@ -319,6 +370,14 @@ const Register = () => {
                 <TextArea
                     id="description"
                     placeholder="Enter Description......"
+
+                />
+                <label style={{ marginLeft: '30px' }}>Enter Promocode </label>
+
+                <Input
+                    id="promoCode"
+                    placeholder="Enter Promocode......"
+                    style={{ marginLeft: '30px' }}
 
                 />
 
@@ -450,7 +509,7 @@ const Register = () => {
                             </div>
 
 
-                            <br></br>             
+                            <br></br>
 
 
                             <label style={{ marginLeft: '30px' }}>User Type</label>

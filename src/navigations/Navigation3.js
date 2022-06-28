@@ -39,6 +39,20 @@ const Navigation3 = () => {
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}
+                                onClick={() => navigate('/getquestion')}
+                            >
+                                Questions
+                            </Button>
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                // className={classes.tabs}
+                                onClick={() => navigate('/askQuestion2')}
+                            >
+                               Ask Questions
+                            </Button>
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                // className={classes.tabs}
                                 onClick={() => navigate('/editProfileServiceProvider')}
                             >
                               Profile
@@ -46,7 +60,7 @@ const Navigation3 = () => {
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}
-                                onClick={() => navigate('/reviews')}
+                                onClick={() => navigate('/reviews2')}
                             >
                                reviews
                             </Button>

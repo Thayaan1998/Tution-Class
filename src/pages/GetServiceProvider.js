@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import Input from '../controls/Input'
 import SearchIcon from '@mui/icons-material/Search';
 import Popup from '../controls/Popup'
+import Reviews from './Reviews'
+
 import Navigation2 from "../navigations/Navigation2"
 import { useNavigate } from 'react-router-dom'
 
@@ -22,15 +24,19 @@ const GetServiceProvider = () => {
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);
 
+    const [show2, setShow2] = useState(false);
+    const handleClose2 = () => setShow2(false);
+
 
     const handleChange1 = e => setLocation(e.target.value);
 
+    const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [contactNumber, setContactNumber] = useState("");
     const [address, setAddress] = useState("");
     const [image, setImage] = useState("");
-    
+
 
     if (localStorage.getItem("userType") !== "serviceConsumer") {
         navigate('/login')
@@ -81,7 +87,7 @@ const GetServiceProvider = () => {
 
     const viewProfile = (users) => {
         console.log(users)
-       
+
         setName(users.userName)
         setEmail(users.email)
         setContactNumber(users.contactNumber)
@@ -92,6 +98,12 @@ const GetServiceProvider = () => {
 
 
 
+    }
+
+    const review =(serviceProviderId)=>{
+        setShow2(true)
+        console.log(serviceProviderId);
+        setId(serviceProviderId)
     }
 
     const serach = async () => {
@@ -115,6 +127,8 @@ const GetServiceProvider = () => {
                 show={show1}
                 handleClose={handleClose1}
                 title="Profile Details"
+                style={{ width: '1000px' }}
+
             >
                 <img
                     src={image}
@@ -126,6 +140,15 @@ const GetServiceProvider = () => {
                 <p >Address: {address}</p>
                 <p >Contact Number: {contactNumber}</p>
 
+            </Popup>
+
+            <Popup
+                show={show2}
+                handleClose={handleClose2}
+                title="Reviews"
+
+            >
+                <Reviews id={id}></Reviews>
 
             </Popup>
             <Box
@@ -180,7 +203,8 @@ const GetServiceProvider = () => {
                                         <Card.Body>
                                             <Button variant="contained" color="primary" style={{ width: 200, margin: '10px' }}
                                                 onClick={() => viewProfile(row.users)}>View Profile</Button>
-                                            <Button variant="contained" color="primary" style={{ width: 200, margin: '10px' }}>Chat</Button>
+                                            <Button variant="contained" color="primary" style={{ width: 200, margin: '10px' }}
+                                                onClick={() => review(row.serviceProviderId)}>Review</Button>
                                         </Card.Body>
                                     </Grid>
                                 </Grid>

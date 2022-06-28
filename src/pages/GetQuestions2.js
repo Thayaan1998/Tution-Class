@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import Navigation3 from "../navigations/Navigation3"
+import Navigation1 from "../navigations/Navigation1"
 import axios from "axios";
 
 import { ButtonToolbar, Card } from 'react-bootstrap';
@@ -13,19 +13,19 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useNavigate } from 'react-router-dom'
 import { WindowSharp } from "@mui/icons-material";
 
-const GetQuestions = () => {
+const GetQuestions2 = () => {
 
     const [question, setQuestion] = React.useState([]);
 
     const navigate = useNavigate();
-    if (localStorage.getItem("userType") !== "serviceProvider") {
+    if (localStorage.getItem("userType") !== "admin") {
         navigate('/login')
     }
 
     const loadQuestions = async () => {
         try {
 
-            const response = await axios.get("http://localhost:9000/questions/getQuestions/"+localStorage.getItem("userId"));
+            const response = await axios.get("http://localhost:9000/questions/getQuestions2");
             console.log(response.data);
             setQuestion(response.data)
 
@@ -45,7 +45,7 @@ const GetQuestions = () => {
     }, []);
     return (
         <div >
-            <Navigation3></Navigation3>
+            <Navigation1></Navigation1>
 
             {
                 question.map((row) => {
@@ -62,7 +62,7 @@ const GetQuestions = () => {
                                 </Card.Text>
 
                                 <Card.Text>
-                                     {row.serviceConsumer.users.userName} ||  {row.serviceConsumer.users.email}  ||   {row.serviceConsumer.users.contactNumber}
+                                     {row.serviceProvider.users.userName} ||  {row.serviceProvider.users.email}  ||   {row.serviceProvider.users.contactNumber}
                                 </Card.Text>
                                
 
@@ -83,4 +83,4 @@ const GetQuestions = () => {
         </div>
     );
 }
-export default GetQuestions;
+export default GetQuestions2;

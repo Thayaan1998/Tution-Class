@@ -6,11 +6,15 @@ import React, { useEffect } from "react";
 
 import Man from './man'
 import Reviews from './pages/Reviews'
+import Reviews2 from './pages/Reviews2'
+
 
 import CustomerList from './pages/CustomerList'
 import Register from './pages/Register'
 import PostRequirement from './pages/PostRequirement'
 import AskQuestion from './pages/AskQuestion'
+import AskQuestion2 from './pages/AskQuestion2'
+
 import AddSubscribe from './pages/AddSubscribe'
 import GetPostRequirements from './pages/GetPostRequirements'
 import GetServiceProvider from './pages/GetServiceProvider'
@@ -35,6 +39,8 @@ import ChangePackage from './pages/ChangePackage'
 
 import SendPromo from './pages/SendPromo'
 import GetQuestions from './pages/GetQuestions'
+import GetQuestions2 from './pages/GetQuestions2'
+
 
 import AcceptAgentAndServiceProviders from './pages/AcceptAgentAndServiceProviders'
 
@@ -100,9 +106,11 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/postRequirement" element={<PostRequirement />} />
               <Route path="/askQuestion" element={<AskQuestion />} />
+              <Route path="/askQuestion2" element={<AskQuestion2 />} />
               <Route path="/addSubscribe" element={<AddSubscribe />} />
               <Route path="/sendPromo" element={<SendPromo />} />
               <Route path="/reviews" element={<Reviews />} />
+              <Route path="/reviews2" element={<Reviews2 />} />
               <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/changePackage" element={<ChangePackage />} />
@@ -113,6 +121,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path='/packages' element={<PackagePage/>}/>
               <Route path='/getquestion' element={<GetQuestions/>}/>
+              <Route path='/getquestion2' element={<GetQuestions2/>}/>
 
               <Route path='/packages_details/:id' element={<PackDetails/>}/>
               <Route path='/payment/:id' element={<Payment/>}/>

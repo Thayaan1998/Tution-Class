@@ -66,8 +66,6 @@ const Payment = () => {
       color: '#e6ac00',
       quotationcount: 400,
       discount: 200
-
-
     },
     {
       id: 2,

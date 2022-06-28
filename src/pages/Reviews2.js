@@ -14,7 +14,7 @@ import Popup from '../controls/Popup'
 
 import Input from '../controls/Input'
 
-const Reviews = (props) => {
+const Reviews2 = (props) => {
 
     const {id}=props
 
@@ -179,7 +179,7 @@ const Reviews = (props) => {
     const loadComments = async () => {
         try {
 
-            var response = await axios.get("http://localhost:9000/comments/allComments/" + id);
+            var response = await axios.get("http://localhost:9000/comments/allComments/" + localStorage.getItem("userId"));
 
 
 
@@ -374,45 +374,10 @@ const Reviews = (props) => {
 
     return (
         <div>
-            {/* {localStorage.getItem("userType") === "serviceConsumer" ? (
-
-              <Navigation2></Navigation2>
-            ) : (
-
-                <Navigation3></Navigation3>
-
-            )} */}
-
-
-
-            <Input
-                id="review"
-                value={input.review}
-                handleInputChange={handleInputChange}
-                placeholder="Enter Review......"
-                errors={errors.review}
-            />
-            <Box
-                sx={{
-                    width: 200,
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginLeft: "20px"
-                }}
-            >
-                <Rating
-                    name="simple-controlled"
-                    value={rating}
-                    size="large"
-                    onChange={(event, newValue) => {
-                        setRatings(newValue);
-                    }}
-                />
-
-                {/* Use rating value */}
-                {rating}
-            </Box>
-            <button class="btn btn-primary" style={{ margin: '30px' }} onClick={submitComment}>Submit</button>
+            
+             <Navigation3></Navigation3>
+            
+            {/* <button class="btn btn-primary" style={{ margin: '30px' }} onClick={submitComment}>Submit</button> */}
             {
                 Comments.map((row) => {
 
@@ -440,12 +405,12 @@ const Reviews = (props) => {
                                 >
                                     <ThumbUpIcon
 
-                                        style={{
+                                        // style={{
 
-                                            color: row.liked == "yes" ? 'blue' : 'black'
-                                        }}
-                                        onClick={() => likeOnClick(row.likes, row.commentsId, row.liked, row.likedId, row.disliked, row.dislikes, row.dislikedId)
-                                        }
+                                        //     color: row.liked == "yes" ? 'blue' : 'black'
+                                        // }}
+                                        // onClick={() => likeOnClick(row.likes, row.commentsId, row.liked, row.likedId, row.disliked, row.dislikes, row.dislikedId)
+                                        // }
 
                                     />
 
@@ -454,11 +419,11 @@ const Reviews = (props) => {
 
                                         style={{
 
-                                            color: row.disliked == "yes" ? 'blue' : 'black',
+                                            // color: row.disliked == "yes" ? 'blue' : 'black',
                                             marginLeft: "20px"
                                         }}
-                                        onClick={() => dislikeOnClick(row.dislikes, row.commentsId, row.disliked, row.dislikedId, row.liked, row.likes, row.likedId)
-                                        }
+                                        // onClick={() => dislikeOnClick(row.dislikes, row.commentsId, row.disliked, row.dislikedId, row.liked, row.likes, row.likedId)
+                                        // }
 
 
                                     />
@@ -493,11 +458,11 @@ const Reviews = (props) => {
             <Popup
                 show={show1}
                 handleClose={handleClose1}
-                title="Enter    Reply"
+                title="Get Replies"
                 style={{ width: '1000px' }}
 
             >
-                <Input
+                {/* <Input
                     id="repliesinputreply"
                     value={repliesinput.repliesinputreply}
                     handleInputChange={handleInputChange2}
@@ -505,7 +470,7 @@ const Reviews = (props) => {
                     errors={errors.repliesinputreply}
                 />
                 <button class="btn btn-primary" style={{ margin: '30px' }}
-                    onClick={submitReply}>Submit</button>
+                    onClick={submitReply}>Submit</button> */}
 
                 {
 
@@ -529,4 +494,4 @@ const Reviews = (props) => {
         </div>
     );
 }
-export default Reviews;
+export default Reviews2;

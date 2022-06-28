@@ -1,11 +1,13 @@
 import Modal from "react-bootstrap/Modal";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalHeader from "react-bootstrap/ModalHeader";
+import ModalContext from "react-bootstrap/ModalContext";
+
 import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 
 const Popup = (props) => {
-    const {children,show,handleClose,title}=props;
+    const { children, show, handleClose, title } = props;
     return (
         <Modal
             show={show}
@@ -13,12 +15,15 @@ const Popup = (props) => {
             backdrop="static"
             keyboard={false}
         >
-            <ModalHeader closeButton>
-                <ModalTitle>{title}</ModalTitle>
-            </ModalHeader>
-            <ModalBody>
-             {children}
-            </ModalBody>
+         
+                <ModalHeader closeButton>
+                    <ModalTitle>{title}</ModalTitle>
+                </ModalHeader>
+                <ModalBody>
+                    {children}
+                </ModalBody>
+           
+
         </Modal>
     );
 

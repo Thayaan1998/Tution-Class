@@ -43,13 +43,7 @@ const Navigation2 = () => {
                             >
                                quotation
                             </Button>
-                            <Button
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                                // className={classes.tabs}
-                                onClick={() => navigate('/reviews')}
-                            >
-                               reviews
-                            </Button>
+                           
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}

@@ -45,7 +45,7 @@ const Navigation1 = () => {
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}
-                                onClick={() => navigate('/getquestion')}
+                                onClick={() => navigate('/getquestion2')}
                             >
                                 Questions
                             </Button>
