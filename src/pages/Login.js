@@ -133,6 +133,14 @@ const Login = () => {
 
                             setUserType("serviceProvider")
                             setUserId(c.data.serviceProviderId)
+                            localStorage.setItem("golddiscount",c.data.goldDiscount);
+                            localStorage.setItem("silverdiscount",c.data.silverDiscount);
+                            localStorage.setItem("platinumdiscount",c.data.platinumDiscount);
+                            localStorage.setItem("promocode",c.data.promoCode);
+
+
+
+
                             setUserName(c.data.users.userName)
                             setShow(true)
 

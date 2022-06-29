@@ -224,6 +224,7 @@ const Register = () => {
                         promoCode: "no",
                         users: a.data,
                         result: "not Accepted",
+                        totalamount:0,
                         promocount: 0,
                         goldDiscount:400,
                         platinumDiscount:600,
@@ -262,7 +263,8 @@ const Register = () => {
                             result: "not Accepted",
                             goldDiscount:"no discount",
                             platinumDiscount:"no discount",
-                            silverDiscount:"no discount"
+                            silverDiscount:"no discount",
+                            promoCode:"no"
                         }   
                     }else{
 
@@ -276,6 +278,7 @@ const Register = () => {
                             category: document.getElementById("category").value,
                             users: a.data,
                             result: "not Accepted",
+                            promoCode:c.data.promoCode,
                             goldDiscount:c.data.goldDiscount,
                             platinumDiscount:c.data.platinumDiscount,
                             silverDiscount:c.data.silverDiscount
@@ -372,7 +375,6 @@ const Register = () => {
                     placeholder="Enter Description......"
 
                 />
-                <label style={{ marginLeft: '30px' }}>Enter Promocode </label>
 
                 <Input
                     id="promoCode"
@@ -380,10 +382,6 @@ const Register = () => {
                     style={{ marginLeft: '30px' }}
 
                 />
-
-
-
-
                 <Button variant="contained" color="primary" style={{ margin: '30px', width: '87%' }} onClick={() => makeRegister()}>Register</Button>
 
 

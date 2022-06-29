@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom'
 
-const AcceptAgentAndServiceProviders = () => {
+const AgentPaymentByAdmin = () => {
 
     const [agents, setAgents] = useState([]);
     const [serviceProviders, setServiceProviders] = useState([]);
@@ -21,54 +21,58 @@ const AcceptAgentAndServiceProviders = () => {
     }
 
 
-    const loadServiceProviders = async () => {
-        try {
-            const response = await axios.get("http://localhost:9000/users/getServiceProviders");
-            setServiceProviders(response.data);
-            console.log(response.data)
+    // const loadServiceProviders = async () => {
+    //     try {
+    //         const response = await axios.get("http://localhost:9000/users/getServiceProviders");
+    //         setServiceProviders(response.data);
+    //         console.log(response.data)
 
 
-        } catch (error) {
-            console.log(error);
+    //     } catch (error) {
+    //         console.log(error);
             
-        }
+    //     }
 
-    }
+    // }
     const loadAgents = async () => {
         try {
-            let a="Not Accepted"
+            let a="Accepted"
             const response = await axios.get("http://localhost:9000/users/getAgents/"+a);
             setAgents(response.data)
             console.log(response.data)
 
-
-
-
         } catch (error) {
             console.log(error);
         }
 
     }
-    useEffect(() => {
-        loadServiceProviders();
-    }, []);
+    // useEffect(() => {
+    //     loadServiceProviders();
+    // }, []);
 
     useEffect(() => {
         loadAgents();
     }, []);
 
 
-    const acceptPromos = async (url, agentId, userId, result) => {
-        if (window.confirm("Do you want to " + result + " the status")) {
+    const acceptPromos = async ( agentId, totalamount) => {
+        if (window.confirm("Do you want to pay this amount")) {
             try {
                 const headers = {
                     'Content-Type': 'application/json'
                 };
-                var b = await axios.get("http://localhost:9000/users/" + url + "/" + result + "," + agentId + "," + userId, { headers });
+
+                var variables={
+                    paymentId:0,
+                    agentId:agentId,
+                    amount:totalamount
+                }
+
+                var b = await axios.post("http://localhost:9000/users/savePayment" ,variables ,{ headers });
 
                 alert(b.data);
                 loadAgents();
-                loadServiceProviders();
+           
 
 
 
@@ -101,6 +105,9 @@ const AcceptAgentAndServiceProviders = () => {
                                     <Card.Text style={{ margin: '5px' }}>
                                         {row.users.contactNumber}
                                     </Card.Text>
+                                    <Card.Text style={{ margin: '5px' }}>
+                                        {row.totalamount}
+                                    </Card.Text>
                                     <Box
                                         sx={{
                                             width: 200,
@@ -108,8 +115,10 @@ const AcceptAgentAndServiceProviders = () => {
                                             alignItems: 'center',
                                         }}
                                     >
-                                        <Button variant="contained" color="primary" style={{ margin: '5px', width: '100px' }} onClick={() => acceptPromos("updateAgent", row.agentId, row.users.userId, "Accepted")}>Accept</Button>
-                                        <Button variant="contained" color="secondary" style={{ margin: '5px', width: '100px' }} onClick={() => acceptPromos("updateAgent", row.agentId, row.users.userId, "Rejected")}>Reject</Button>
+                                        {/* {/* <Button variant="contained" color="primary" style={{ margin: '5px', width: '100px' }} onClick={() => acceptPromos("updateAgent", row.agentId, row.users.userId, "Accepted")}>Accept</Button> */}
+                                        <Button variant="contained" color="primary" style={{ margin: '5px', width: '100px' }} 
+                                        onClick={() => acceptPromos( row.agentId, row.totalamount)}
+                                        >Payment</Button> 
 
                                     </Box>
 
@@ -120,9 +129,9 @@ const AcceptAgentAndServiceProviders = () => {
                     }
                 </Grid>
                 <Grid item xs={6}>
-                    <h3 style={{ margin: '20px' }}>Service Providers</h3>
+                    {/* <h3 style={{ margin: '20px' }}>Service Providers</h3> */}
 
-                    {
+                    {/* {
 
                         serviceProviders.map((row) => {
                             return (
@@ -154,7 +163,7 @@ const AcceptAgentAndServiceProviders = () => {
                             )
                         })
 
-                    }
+                    } */}
                 </Grid>
             </Grid>
 
@@ -163,4 +172,4 @@ const AcceptAgentAndServiceProviders = () => {
 
 }
 
-export default AcceptAgentAndServiceProviders;
+export default AgentPaymentByAdmin;

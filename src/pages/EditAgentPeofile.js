@@ -17,13 +17,15 @@ const EditAgentProfile = () => {
     const [address, setAddress] = useState("")
     const [image, setImage] = useState("")
     const [contactNumber, setContactNumber] = useState("")
+    const [payment, setPayment] = useState([])
+
     const [userId, setUserId] = useState(0)
     const navigate = useNavigate();
 
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);
 
-    
+
     const [show2, setShow2] = useState(false);
     const handleClose2 = () => setShow2(false);
 
@@ -33,7 +35,7 @@ const EditAgentProfile = () => {
     }
 
 
-    const[promocount,setPromoCount]=useState("");
+    const [promocount, setPromoCount] = useState("");
     const loadProfile = async () => {
         try {
             const response = await axios.get("http://localhost:9000/users/getAgentById/" + localStorage.getItem("userId"));
@@ -49,6 +51,27 @@ const EditAgentProfile = () => {
         }
 
     }
+
+    const loadPayments = async () => {
+        try {
+
+            const response = await axios.get("http://localhost:9000/users/getPayment/" + localStorage.getItem("userId"));
+
+            console.log(response.data)
+            setPayment(response.data)
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+    // useEffect(() => {
+    //     loadServiceProviders();
+    // }, []);
+
+    useEffect(() => {
+        loadPayments();
+    }, []);
 
     useEffect(() => {
         loadProfile();
@@ -95,7 +118,7 @@ const EditAgentProfile = () => {
 
     }
 
-    const getReport=()=>{
+    const getReport = () => {
         setShow2(true);
     }
     return (
@@ -107,9 +130,9 @@ const EditAgentProfile = () => {
                 handleClose={handleClose2}
                 title="Report for promo"
             >
-              <p> used promo count :{promocount}</p> 
-              <p>Collected Amount :1000Rs</p> 
-            </Popup>    
+                <p> used promo count :{promocount}</p>
+                <p>Collected Amount :1000Rs</p>
+            </Popup>
 
             <Popup
                 show={show1}
@@ -174,6 +197,25 @@ const EditAgentProfile = () => {
                 <Button variant="contained" color="primary" style={{ margin: '30px', width: '87%' }} onClick={() => getReport()}>Report</Button>
 
             </Card>
+            {
+
+                payment.map((row) => {
+                    return (
+
+                        <Card style={{ width: '18rem', margin: '20px' }}>
+                             <Card.Text style={{ margin: '5px' }}>
+                                <b> Paid Amount</b>
+                            </Card.Text>
+                            <Card.Text style={{ margin: '5px' }}>
+                                <b> {row.amount}</b> Rs
+                            </Card.Text>
+
+                            
+
+                        </Card>
+                    )
+                })
+            }
 
 
         </div>

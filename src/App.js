@@ -44,6 +44,8 @@ import GetQuestions2 from './pages/GetQuestions2'
 
 import AcceptAgentAndServiceProviders from './pages/AcceptAgentAndServiceProviders'
 
+import AgentPaymentByAdmin from './pages/AgentPaymentByAdmin'
+
 import Profile from './pages/Profile'
 
 import Login from './pages/Login'
@@ -122,7 +124,7 @@ function App() {
               <Route path='/packages' element={<PackagePage/>}/>
               <Route path='/getquestion' element={<GetQuestions/>}/>
               <Route path='/getquestion2' element={<GetQuestions2/>}/>
-
+              <Route path='/agentPayment' element={<AgentPaymentByAdmin/>}/>
               <Route path='/packages_details/:id' element={<PackDetails/>}/>
               <Route path='/payment/:id' element={<Payment/>}/>
 

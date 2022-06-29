@@ -49,6 +49,16 @@ const Navigation1 = () => {
                             >
                                 Questions
                             </Button>
+
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                // className={classes.tabs}
+                                onClick={() => navigate('/agentPayment')}
+                            >
+                                Agent Payment
+                            </Button>
+
+                            
                             <Button
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                                 // className={classes.tabs}

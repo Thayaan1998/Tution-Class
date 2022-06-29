@@ -57,33 +57,34 @@ const Payment = () => {
 
   // }
 
+  console.log(localStorage.getItem("golddiscount"))
   const packagedetails = [
     {
       id: 1,
       name: 'Gold',
-      price: 400,
+      price: 2000,
       image: require('../GoldIcon.png'),
       color: '#e6ac00',
       quotationcount: 400,
-      discount: 200
+      discount: localStorage.getItem("golddiscount")
     },
     {
       id: 2,
       name: 'Platinum',
-      price: 500,
+      price: 3000,
       image: require('../PlatinumIcon.png'),
       color: '#6a6b6b',
       quotationcount: 500,
-      discount: 300
+      discount: localStorage.getItem("platinumdiscount")
     },
     {
       id: 3,
       name: 'Silver',
-      price: 300,
+      price: 1000,
       image: require('../SilverIcon.png'),
       color: '#b7babc',
       quotationcount: 300,
-      discount: 100
+      discount: localStorage.getItem("silverdiscount"),
 
 
     }
@@ -130,13 +131,13 @@ const Payment = () => {
         var res2 = await axios.post("http://localhost:9000/subscribe/addSubscribe", values, { headers });
         alert(res2.data);
 
-        if( document.getElementById("promoCode").value!==""){
-          var res3 = await axios.get("http://localhost:9000/users/updatePromoCount/" + document.getElementById("promoCode").value, { headers });
+        if(localStorage.getItem("promocode")!=="no"){
+          var res3 = await axios.get("http://localhost:9000/users/updateAmount/" +  localStorage.getItem("promocode"), { headers });
           console.log(res3.data)
   
-          alert("by promocode you got discount amount "+packagedetails[id - 1].discount);
-        }
         
+        }
+        alert("you subscribed successfully");
       } catch (ex) {
         console.log(ex);
       }
@@ -156,13 +157,8 @@ const Payment = () => {
           <Card.Img src={packagedetails[id - 1].image} style={{ width: "100%", height: "90%", padding: '5%' }} />
         </Card>
         <Card>
-          <Card.Body style={{ padding: '10%' }} >
-            <Input
-              id="promoCode"
-              placeholder="Enter Promocode......"
-
-            />
-            <Form>
+          <Card.Body style={{ padding: '10%' }} >           
+           <Form>
               <h1 style={{ fontSize: "30px", fontFamily: "Trebuchet MS", textAlign: "center" }}><b>Payment</b></h1>
               <Table >
                 <tbody>
@@ -173,6 +169,19 @@ const Payment = () => {
                   <tr>
                     <td>Price</td>
                     <td className="text-end" style={{ color: packagedetails[id - 1].color }}><h5>{packagedetails[id - 1].price}</h5></td>
+                  </tr>
+                </tbody>
+              </Table>
+
+              <Table >
+                <tbody>
+                  <tr>
+                    <td>Package</td>
+                    <td className="text-end" style={{ color: packagedetails[id - 1].color, fontFamily: "Brush Script MT" }}><h5>Discount</h5></td>
+                  </tr>
+                  <tr>
+                    <td>Price</td>
+                    <td className="text-end" style={{ color: packagedetails[id - 1].color }}><h5>{packagedetails[id - 1].discount}</h5></td>
                   </tr>
                 </tbody>
               </Table>
